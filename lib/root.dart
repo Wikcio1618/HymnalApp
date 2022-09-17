@@ -25,58 +25,65 @@ class _RootPageState extends State<RootPage> {
         centerTitle: true,
       ),
       body: pagesWidgets[currPage],
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: const Text('Historia wyszukiwania'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Tryb ciemny'),
-              trailing: Switch(
-                value: isSwitched,
-                onChanged: (bool value) {
-                  setState(() {
-                    isSwitched = value;
-                  });
-                },
-              ),
-              onTap: () {
+      drawer: _addCustomDrawer(),
+      bottomNavigationBar: _addCustomNavigationBar(),
+    );
+  }
+
+  _addCustomDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          ListTile(
+            title: const Text('Historia wyszukiwania'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Tryb ciemny'),
+            trailing: Switch(
+              value: isSwitched,
+              onChanged: (bool value) {
                 setState(() {
-                  isSwitched = !isSwitched;
+                  isSwitched = value;
                 });
               },
             ),
-            ListTile(
-              title: const Text('Zgłoś pieśń'),
-              onTap: () {},
-            ),
-            const ListTile(
-                title: null, subtitle: Text('Autor aplikacji:\nWiktor Ciołek')),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.home), label: pagesTitles[0]),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.search), label: pagesTitles[1]),
-          BottomNavigationBarItem(
-              icon:
-                  const Icon(Icons.book /* ballot amp_stories apps article */),
-              label: pagesTitles[2])
+            onTap: () {
+              setState(() {
+                isSwitched = !isSwitched;
+              });
+            },
+          ),
+          ListTile(
+            title: const Text('Zgłoś pieśń'),
+            onTap: () {},
+          ),
+          const ListTile(
+              title: null, subtitle: Text('Autor aplikacji:\nWiktor Ciołek')),
         ],
-        currentIndex: currPage,
-        onTap: (int index) {
-          setState(() {
-            currPage = index;
-          });
-        },
-        backgroundColor: const Color.fromARGB(255, 194, 155, 141),
       ),
+    );
+  }
+
+  _addCustomNavigationBar() {
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.home), label: pagesTitles[0]),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.search), label: pagesTitles[1]),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.book /* ballot apps */),
+            label: pagesTitles[2])
+      ],
+      currentIndex: currPage,
+      onTap: (int index) {
+        setState(() {
+          currPage = index;
+        });
+      },
+      backgroundColor: const Color.fromARGB(255, 194, 155, 141),
     );
   }
 }
