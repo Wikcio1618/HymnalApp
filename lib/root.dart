@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/root_home.dart';
-import 'package:hymnal_app/root_library.dart';
+import 'package:hymnal_app/root_collections.dart';
 import 'package:hymnal_app/root_search.dart';
 
 class RootPage extends StatefulWidget {
@@ -12,14 +12,13 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currPage = 0;
-  List<Widget> pagesWidgets = const [Home(), Search(), Library()];
-  List<String> pagesTitles = const ['Początek', 'Wyszukaj', 'Biblioteka'];
+  List<Widget> pagesWidgets = const [Home(), Search(), Collections()];
+  List<String> pagesTitles = const ['Początek', 'Szukaj', 'Kolekcje'];
   bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 151, 98, 79),
       appBar: AppBar(
         title: Text(pagesTitles[currPage]),
         centerTitle: true,
@@ -70,11 +69,11 @@ class _RootPageState extends State<RootPage> {
     return BottomNavigationBar(
       items: [
         BottomNavigationBarItem(
-            icon: const Icon(Icons.home), label: pagesTitles[0]),
+            icon: const Icon(Icons.home_outlined), label: pagesTitles[0]),
         BottomNavigationBarItem(
             icon: const Icon(Icons.search), label: pagesTitles[1]),
         BottomNavigationBarItem(
-            icon: const Icon(Icons.book /* ballot apps */),
+            icon: const Icon(Icons.ballot_outlined /* ballot apps */),
             label: pagesTitles[2])
       ],
       currentIndex: currPage,
@@ -83,7 +82,6 @@ class _RootPageState extends State<RootPage> {
           currPage = index;
         });
       },
-      backgroundColor: const Color.fromARGB(255, 194, 155, 141),
     );
   }
 }
