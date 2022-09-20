@@ -4,52 +4,54 @@ class Hymn {
   final int? id;
   final String title;
   final String text;
-  final List<Songbooks>? songbook;
-  final List<Categories>? category;
+  final List<Songbooks>? songbooks;
+  final List<Categories>? categories;
 
   const Hymn(
       {this.id,
       required this.title,
       required this.text,
-      this.songbook,
-      this.category});
+      this.songbooks,
+      this.categories});
 
   static List<Hymn> hymns = [
     const Hymn(
         title: 'Cudowna boża łaska',
         text: 'twa, zbawiła z grzechów mnie..',
-        songbook: [Songbooks.glosWiary],
-        category: [Categories.radosne]),
+        songbooks: [Songbooks.glosWiary],
+        categories: [Categories.radosne]),
     const Hymn(
         title: 'Cudowna boża łaska',
         text: 'twa, zbawiłaa z grzechów mnie..',
-        songbook: [Songbooks.glosWiary],
-        category: [Categories.radosne]),
+        songbooks: [Songbooks.glosWiary],
+        categories: [Categories.radosne]),
     const Hymn(
         title: 'Gdy na ten świat',
         text: 'spoglądam wielki Boże',
-        songbook: [Songbooks.glosWiary],
-        category: [Categories.radosne, Categories.szybkie]),
+        songbooks: [Songbooks.glosWiary],
+        categories: [Categories.radosne, Categories.szybkie]),
+    const Hymn(title: 'Błogo mi', text: 'W Panu wieczny mam dział', songbooks: [
+      Songbooks.pielgrzym
+    ], categories: [
+      Categories.radosne,
+      Categories.szybkie,
+      Categories.smutne
+    ]),
     const Hymn(
         title: 'Błogo mi',
         text: 'W Panu wieczny mam dział',
-        songbook: [Songbooks.pielgrzym],
-        category: [Categories.radosne, Categories.szybkie, Categories.smutne]),
+        songbooks: [Songbooks.pielgrzym],
+        categories: [Categories.smutne]),
     const Hymn(
         title: 'Błogo mi',
         text: 'W Panu wieczny mam dział',
-        songbook: [Songbooks.pielgrzym],
-        category: [Categories.smutne]),
+        songbooks: [Songbooks.wedrowiec],
+        categories: [Categories.radosne, Categories.szybkie]),
     const Hymn(
         title: 'Błogo mi',
         text: 'W Panu wieczny mam dział',
-        songbook: [Songbooks.wedrowiec],
-        category: [Categories.radosne, Categories.szybkie]),
-    const Hymn(
-        title: 'Błogo mi',
-        text: 'W Panu wieczny mam dział',
-        songbook: [Songbooks.wedrowiec, Songbooks.glosWiary],
-        category: [Categories.smutne]),
+        songbooks: [Songbooks.wedrowiec, Songbooks.glosWiary],
+        categories: [Categories.smutne]),
   ];
 
   static List<String> getTitles() {
@@ -64,5 +66,16 @@ class Hymn {
     List<Hymn> hymnsCopy = List.from(hymns);
     hymnsCopy.sort(((hymn1, hymn2) => hymn1.title.compareTo(hymn2.title)));
     return hymnsCopy;
+  }
+
+  static List<Hymn> getHymnsOfSongbook(Songbooks songbook, int option) {
+    Iterator<Hymn> hymns = Hymn.hymns.iterator;
+    List<Hymn> hymnsOfSongbook = [];
+    while (hymns.moveNext()) {
+      if (hymns.current.songbooks!.contains(Songbooks.values[option])) {
+        hymnsOfSongbook.add(hymns.current);
+      }
+    }
+    return hymnsOfSongbook;
   }
 }

@@ -27,37 +27,39 @@ class _SearchState extends State<Search> {
     return _customSearchContainer();
   }
 
-  Widget _customSearchContainer() => Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10, right: 25, left: 25),
-            child: Column(children: [
-              const ListTile(
-                tileColor: Color.fromARGB(255, 231, 230, 230),
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(30))),
-                leading: Icon(Icons.search),
-                title: TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Wyszukaj po tytule lub tekście...',
-                      hintStyle: TextStyle(fontStyle: FontStyle.italic)),
+  Widget _customSearchContainer() => SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10, right: 25, left: 25),
+              child: Column(children: [
+                const ListTile(
+                  tileColor: Color.fromARGB(255, 231, 230, 230),
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  leading: Icon(Icons.search),
+                  title: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Wyszukaj po tytule lub tekście...',
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic)),
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  _customSearchOutlinedButton('Alfabetycznie', 0),
-                  const SizedBox(width: 5),
-                  _customSearchOutlinedButton('Śpiewniki', 1),
-                  const SizedBox(width: 5),
-                  _customSearchOutlinedButton('Kategorie', 2),
-                ],
-              )
-            ]),
-          ),
-          searchBody[currSearch],
-        ],
+                Row(
+                  children: [
+                    _customSearchOutlinedButton('Alfabetycznie', 0),
+                    const SizedBox(width: 5),
+                    _customSearchOutlinedButton('Śpiewniki', 1),
+                    const SizedBox(width: 5),
+                    _customSearchOutlinedButton('Kategorie', 2),
+                  ],
+                )
+              ]),
+            ),
+            searchBody[currSearch],
+          ],
+        ),
       );
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
@@ -71,7 +73,8 @@ class _SearchState extends State<Search> {
       },
       style: ButtonStyle(
           backgroundColor: selected[index]
-              ? const MaterialStatePropertyAll<Color>(Color.fromARGB(255, 231, 230, 230))
+              ? const MaterialStatePropertyAll<Color>(
+                  Color.fromARGB(255, 231, 230, 230))
               : null,
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
