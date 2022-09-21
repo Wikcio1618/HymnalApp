@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'model/hymn.dart';
+import '../model/hymn.dart';
 
 class TileBuilder {
   static Widget customRubricTile(String label) => Column(children: [

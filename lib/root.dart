@@ -13,7 +13,7 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int currPage = 0;
   List<Widget> pagesWidgets = const [Home(), Search(), Collections()];
-  List<String> pagesTitles = const ['Początek', 'Szukaj', 'Kolekcje'];
+  List<String> pagesTitles = const ['Początek', 'Szukaj', 'Moje śpiewniki'];
   bool isSwitched = false;
 
   @override
@@ -24,12 +24,12 @@ class _RootPageState extends State<RootPage> {
         centerTitle: true,
       ),
       body: pagesWidgets[currPage],
-      drawer: _addCustomDrawer(),
-      bottomNavigationBar: _addCustomNavigationBar(),
+      drawer: _buildCustomDrawer(),
+      bottomNavigationBar: _buildCustomNavigationBar(),
     );
   }
 
-  _addCustomDrawer() {
+  _buildCustomDrawer() {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -65,7 +65,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  _addCustomNavigationBar() {
+  _buildCustomNavigationBar() {
     return BottomNavigationBar(
       items: [
         BottomNavigationBarItem(

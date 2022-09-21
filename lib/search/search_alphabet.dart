@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal_app/search_tile_builder.dart';
+import 'package:hymnal_app/services/tile_builder.dart';
 
-import 'model/hymn.dart';
+import '../model/hymn.dart';
 
 class AlphabeticalListView extends StatefulWidget {
   const AlphabeticalListView({super.key});

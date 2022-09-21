@@ -68,7 +68,7 @@ class Hymn {
     return hymnsCopy;
   }
 
-  static List<Hymn> getHymnsOfSongbook(Songbooks songbook, int option) {
+  static List<Hymn> getHymnsOfSongbook(int option) {
     Iterator<Hymn> hymns = Hymn.hymns.iterator;
     List<Hymn> hymnsOfSongbook = [];
     while (hymns.moveNext()) {
@@ -77,5 +77,28 @@ class Hymn {
       }
     }
     return hymnsOfSongbook;
+  }
+
+  static List<Hymn> getHymnsOfCategory(int option) {
+    Iterator<Hymn> hymns = Hymn.hymns.iterator;
+    List<Hymn> hymnsOfCategory = [];
+    while (hymns.moveNext()) {
+      if (hymns.current.categories!.contains(Categories.values[option])) {
+        hymnsOfCategory.add(hymns.current);
+      }
+    }
+    return hymnsOfCategory;
+  }
+
+  static List<Songbooks> getSongbooksSortedAlphabetically() {
+    List<Songbooks> valuesCopy = List.from(Songbooks.values);
+    valuesCopy.sort(((a, b) => a.toString().compareTo(b.toString())));
+    return valuesCopy;
+  }
+
+  static List<Categories> getCategoriesSortedAlphabetically() {
+    List<Categories> valuesCopy = List.from(Categories.values);
+    valuesCopy.sort(((a, b) => a.toString().compareTo(b.toString())));
+    return valuesCopy;
   }
 }
