@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:hymnal_app/search/search_alphabet.dart';
 import 'package:hymnal_app/search/search_category.dart';
+import 'package:hymnal_app/search/search_keyboard.dart';
 import 'package:hymnal_app/search/search_nothing.dart';
 import 'package:hymnal_app/search/search_songbook.dart';
 
@@ -24,6 +26,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.5;
     return _customSearchContainer();
   }
 
@@ -51,24 +54,36 @@ class _SearchState extends State<Search> {
                     _customSearchOutlinedButton('Kategorie', 2),
                   ],
                 ),
-                ListTile(
-                  tileColor: const Color.fromARGB(255, 231, 230, 230),
-                  shape: const RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  leading: const Icon(Icons.search),
-                  title: TextField(
-                    autocorrect: false,
-                    // autofocus: true,
-                    onTap: () {
-                      onSearchOptionTap(3);
-                    },
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Wyszukaj po tytule lub tekście...',
-                        hintStyle: TextStyle(fontStyle: FontStyle.italic)),
-                  ),
-                ),
+                Hero(
+                    tag: 'searchBar',
+                    child: Card(
+                      shape: const RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const SearchView();
+                          }));
+                        },
+                        tileColor: const Color.fromARGB(255, 231, 230, 230),
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.grey),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
+                        leading: const Icon(
+                          Icons.search,
+                          color: Color.fromARGB(255, 190, 136, 86),
+                        ),
+                        title: const Text(
+                          'Wyszukaj po tytule lub tekście...',
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              color: Color.fromARGB(255, 100, 99, 99)),
+                        ),
+                      ),
+                    )),
                 const SizedBox(
                   height: 3,
                 ),
