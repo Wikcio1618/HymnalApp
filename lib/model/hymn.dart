@@ -38,9 +38,10 @@ class Hymn {
     await ref.get().then((value) {
       hymns.add(value.data()!);
       print(value.data());
-    }, onError: (e) {
+    } /* , onError: (e) {
       throw Exception(e);
-    });
+    } */
+        );
 
 /*     db
         .collection("hymns")
