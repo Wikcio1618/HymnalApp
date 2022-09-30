@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hymnal_app/services/state_song_notifier.dart';
+import 'package:provider/provider.dart';
 import '../model/hymn.dart';
 
 class TileBuilder {
@@ -24,8 +26,15 @@ class TileBuilder {
         ),
       ]);
 
-  static Widget customLibraryTile(Hymn hymn) => ListTile(
-        title: Text(hymn.title),
-        subtitle: Text(hymn.text),
+  static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
+        builder: (context, state, child) => ListTile(
+          title: Text(hymn.title),
+          subtitle: Text(hymn.text),
+          onTap: () {
+            state.changeSong(hymn);
+            state.changeState(0);
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
       );
 }

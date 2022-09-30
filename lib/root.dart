@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hymnal_app/root_song.dart';
 import 'package:hymnal_app/root_collections.dart';
 import 'package:hymnal_app/root_search.dart';
-import 'package:hymnal_app/services/state_notifier.dart';
+import 'package:hymnal_app/services/state_song_notifier.dart';
 import 'package:provider/provider.dart';
-
-import 'model/hymn.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -15,17 +13,13 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  List<Widget> pagesWidgets = [
-    Song(Hymn.hymns[0]),
-    const Search(),
-    const Collections()
-  ];
-  List<String> pagesTitles = const ['Początek', 'Szukaj', 'Moje śpiewniki'];
+  List<Widget> pagesWidgets = const [Song(), Search(), Collections()];
+  List<String> pagesTitles = const ['Pieśń', 'Szukaj', 'Moje śpiewniki'];
   bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<StateNotifier>(builder: (context, state, child) {
+    return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text(pagesTitles[state.currState]),
@@ -74,11 +68,12 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  _buildCustomNavigationBar(StateNotifier state) {
+  _buildCustomNavigationBar(StateAndSongNotifier state) {
     return BottomNavigationBar(
+      enableFeedback: true,
       items: [
         BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined), label: pagesTitles[0]),
+            icon: const Icon(Icons.menu_book_rounded), label: pagesTitles[0]),
         BottomNavigationBarItem(
             icon: const Icon(Icons.search), label: pagesTitles[1]),
         BottomNavigationBarItem(
