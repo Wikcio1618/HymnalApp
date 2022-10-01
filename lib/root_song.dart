@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hymnal_app/services/state_song_notifier.dart';
+import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 
-class Song extends StatelessWidget {
+class Song extends StatefulWidget {
   const Song({super.key});
 
+  @override
+  State<Song> createState() => _SongState();
+}
+
+class _SongState extends State<Song> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, notifier, child) {

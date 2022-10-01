@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal_app/services/state_song_notifier.dart';
+import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 import '../model/hymn.dart';
 
@@ -33,7 +33,9 @@ class TileBuilder {
           onTap: () {
             state.changeSong(hymn);
             state.changeState(0);
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushNamed('/',
+                arguments:
+                    1); // coming from navigation opt. 1 (will be change when collections are added)
           },
         ),
       );

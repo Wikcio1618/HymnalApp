@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/root.dart';
+import 'package:hymnal_app/root_collections.dart';
+import 'package:hymnal_app/root_search.dart';
+import 'package:hymnal_app/root_song.dart';
 
-import 'package:hymnal_app/services/state_song_notifier.dart';
+import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -17,8 +20,18 @@ class MyApp extends StatelessWidget {
       create: (context) => StateAndSongNotifier(),
       child: MaterialApp(
         home: const RootPage(),
-        routes: {
-          "/root": (context) => const RootPage(),
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case "/song":
+              return MaterialPageRoute(builder: (context) => const Song());
+            case "/search":
+              return MaterialPageRoute(builder: (context) => const Search());
+            case "/collections":
+              return MaterialPageRoute(
+                  builder: (context) => const Collections());
+            default:
+              return MaterialPageRoute(builder: (context) => const RootPage());
+          }
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

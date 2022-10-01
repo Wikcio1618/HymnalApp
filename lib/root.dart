@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hymnal_app/root_song.dart';
 import 'package:hymnal_app/root_collections.dart';
 import 'package:hymnal_app/root_search.dart';
-import 'package:hymnal_app/services/state_song_notifier.dart';
+import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 
 class RootPage extends StatefulWidget {
@@ -12,24 +12,88 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage>
+    with SingleTickerProviderStateMixin {
   List<Widget> pagesWidgets = const [Song(), Search(), Collections()];
   List<String> pagesTitles = const ['Pieśń', 'Szukaj', 'Moje śpiewniki'];
   bool isSwitched = false;
+
+  late AnimationController controller;
+  late Animation<Offset> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 50),
+      vsync: this,
+    );
+    animation =
+        Tween<Offset>(begin: Offset.zero, end: Offset.zero).animate(controller);
+  }
+
+  void animatePage(int destPage, StateAndSongNotifier state) {
+    controller.reset();
+    double startPos = destPage.compareTo(state.currPage).toDouble();
+
+    animation = Tween<Offset>(begin: Offset(startPos, 0), end: Offset.zero)
+        .animate(controller);
+    controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(pagesTitles[state.currState]),
+          title: Text(pagesTitles[state.currPage]),
           centerTitle: true,
         ),
-        body: pagesWidgets[state.currState],
+        body: _buildScreens(state),
         drawer: _buildCustomDrawer(),
         bottomNavigationBar: _buildCustomNavigationBar(state),
       );
     });
+  }
+
+  Stack _buildScreens(StateAndSongNotifier state) {
+    List<Widget> children = [];
+    pagesWidgets.asMap().forEach((index, value) {
+      children.add(
+        Offstage(
+          offstage: state.currPage != index,
+          child: TickerMode(
+            enabled: state.currPage == index,
+            child: SlideTransition(
+              position: animation,
+              child: value,
+            ),
+          ),
+        ),
+      );
+    });
+
+    return Stack(children: children);
+  }
+
+  _buildCustomNavigationBar(StateAndSongNotifier state) {
+    return BottomNavigationBar(
+      enableFeedback: true,
+      items: [
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.menu_book_rounded), label: pagesTitles[0]),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.search), label: pagesTitles[1]),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.ballot_outlined /* ballot apps */),
+            label: pagesTitles[2])
+      ],
+      currentIndex: state.currPage,
+      onTap: (int destPage) {
+        animatePage(destPage, state);
+        state.changeState(destPage);
+      },
+    );
   }
 
   _buildCustomDrawer() {
@@ -65,25 +129,6 @@ class _RootPageState extends State<RootPage> {
               title: null, subtitle: Text('Autor aplikacji:\nWiktor Ciołek')),
         ],
       ),
-    );
-  }
-
-  _buildCustomNavigationBar(StateAndSongNotifier state) {
-    return BottomNavigationBar(
-      enableFeedback: true,
-      items: [
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.menu_book_rounded), label: pagesTitles[0]),
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.search), label: pagesTitles[1]),
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.ballot_outlined /* ballot apps */),
-            label: pagesTitles[2])
-      ],
-      currentIndex: state.currState,
-      onTap: (int index) {
-        state.changeState(index);
-      },
     );
   }
 }
