@@ -25,7 +25,7 @@ class _RootPageState extends State<RootPage>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 70),
       vsync: this,
     );
     animation =
