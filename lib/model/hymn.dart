@@ -29,19 +29,16 @@ class Hymn {
       }
     }, onError: (e) => throw Exception(e)); */
 
-    final ref = db
+    /* final ref = FirebaseFirestore.instance
         .collection("hymns")
-        .doc("V1Gdf7DdyT0J3YDoxJrJ")
         .withConverter<Hymn>(
             fromFirestore: Hymn.fromFirestore,
             toFirestore: (Hymn hymn, _) => hymn.toFirestore());
     await ref.get().then((value) {
-      hymns.add(value.data()!);
-      print(value.data());
-    } /* , onError: (e) {
+      print(value.docs);
+    } */ /* , onError: (e) {
       throw Exception(e);
     } */
-        );
 
 /*     db
         .collection("hymns")

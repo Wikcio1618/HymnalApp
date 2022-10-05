@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hymnal_app/search/search_alphabet.dart';
@@ -97,7 +98,10 @@ class _SearchState extends State<Search> {
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
-          Hymn.fetchHymns();
+          var db = FirebaseFirestore.instance;
+          db.collection("hymns").get().then((value) {
+            print(value);
+          });
           onSearchOptionTap(index);
           FocusScope.of(context).requestFocus(FocusNode());
         },
