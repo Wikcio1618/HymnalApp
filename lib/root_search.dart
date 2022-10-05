@@ -32,10 +32,6 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
 
   Widget _customSearchContainer() => Column(
         children: [
-/*             const Divider(
-              color: Colors.black,
-              height: 20,
-            ), */
           Expanded(
               child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),

@@ -15,6 +15,7 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage>
     with SingleTickerProviderStateMixin {
   List<Widget> pagesWidgets = const [Song(), Search(), Collections()];
+
   List<String> pagesTitles = const ['Pieśń', 'Szukaj', 'Moje śpiewniki'];
   bool isSwitched = false;
 
@@ -25,7 +26,7 @@ class _RootPageState extends State<RootPage>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(milliseconds: 70),
+      duration: const Duration(milliseconds: 170),
       vsync: this,
     );
     animation =
@@ -45,10 +46,12 @@ class _RootPageState extends State<RootPage>
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(pagesTitles[state.currPage]),
-          centerTitle: true,
-        ),
+        appBar: !state.isAppBarVisible
+            ? null
+            : AppBar(
+                title: Text(pagesTitles[state.currPage]),
+                centerTitle: true,
+              ),
         body: _buildScreens(state),
         drawer: _buildCustomDrawer(),
         bottomNavigationBar: _buildCustomNavigationBar(state),

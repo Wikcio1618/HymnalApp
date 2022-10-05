@@ -9,6 +9,8 @@ class DiscoverCategoryPage extends StatelessWidget {
   final int option;
   late final List<Hymn> hymnsOfCategory = Hymn.getHymnsOfCategory(option);
 
+// TODO - make it a widget not route
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

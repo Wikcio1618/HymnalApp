@@ -7,37 +7,11 @@ class Collections extends StatefulWidget {
   State<Collections> createState() => _CollectionsState();
 }
 
-class _CollectionsState extends State<Collections>
-    with SingleTickerProviderStateMixin {
-  double startPos = -1.0;
-  double endPos = 0.0;
-
-  late Animation<Offset> animation;
-  late AnimationController controller;
-
-  @override
-  initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 100),
-      vsync: this,
-    );
-    animation =
-        Tween<Offset>(begin: Offset(startPos, 0), end: Offset(endPos, 0))
-            .animate(controller);
-    controller.forward();
-  }
-
+class _CollectionsState extends State<Collections> {
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
-    return SlideTransition(
-      position: animation,
-      child: Container(
-        width: double.infinity,
-        child: Center(child: Text('dummy')),
-      ),
-    );
+    return Center(child: Text('dummy'));
 
     /* TweenAnimationBuilder(
       tween: Tween<Offset>(begin: Offset(startPos, 0), end: Offset(endPos, 0)),
@@ -72,17 +46,5 @@ class _CollectionsState extends State<Collections>
         );
       },
     ); */
-  }
-
-  Future<void> callAnimation(int callNav, int destinationNav) async {
-    startPos = callNav > destinationNav ? -1 : 1;
-    endPos = 0;
-    animation =
-        Tween<Offset>(begin: Offset(startPos, 0), end: Offset(endPos, 0))
-            .animate(controller);
-
-    try {
-      await controller.forward();
-    } on TickerCanceled {}
   }
 }

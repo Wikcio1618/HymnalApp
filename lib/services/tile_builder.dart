@@ -31,11 +31,10 @@ class TileBuilder {
           title: Text(hymn.title),
           subtitle: Text(hymn.text),
           onTap: () {
-            state.changeSong(hymn);
             state.changeState(0);
-            Navigator.of(context).pushNamed('/',
-                arguments:
-                    1); // coming from navigation opt. 1 (will be change when collections are added)
+            state.changeSong(hymn);
+
+            // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
           },
         ),
       );

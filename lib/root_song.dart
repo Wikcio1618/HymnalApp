@@ -9,7 +9,7 @@ class Song extends StatefulWidget {
   State<Song> createState() => _SongState();
 }
 
-class _SongState extends State<Song> with SingleTickerProviderStateMixin {
+class _SongState extends State<Song> {
   @override
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, notifier, child) {
