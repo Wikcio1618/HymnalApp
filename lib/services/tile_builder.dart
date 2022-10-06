@@ -33,7 +33,6 @@ class TileBuilder {
           onTap: () {
             state.changeState(0);
             state.changeSong(hymn);
-
             // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
           },
         ),

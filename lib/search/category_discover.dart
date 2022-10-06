@@ -13,11 +13,11 @@ class DiscoverCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(Categories.values[option].name)),
-      body: ListView.builder(
-          itemCount: hymnsOfCategory.length, itemBuilder: tileBuilder),
-    );
+    return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: hymnsOfCategory.length,
+        itemBuilder: tileBuilder);
   }
 
   Widget tileBuilder(BuildContext context, int index) =>

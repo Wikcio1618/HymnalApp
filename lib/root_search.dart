@@ -33,9 +33,10 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _customSearchContainer() => Column(
         children: [
           Expanded(
-              child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: searchBody[currSearch])),
+            child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: searchBody[currSearch]),
+          ),
           const Divider(color: Color.fromARGB(255, 190, 136, 86)),
           Padding(
             padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
@@ -51,35 +52,35 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                   ],
                 ),
                 Hero(
-                    tag: 'searchBar',
-                    child: Card(
+                  tag: 'searchBar',
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return const SearchView();
+                        }));
+                      },
+                      tileColor: const Color.fromARGB(255, 231, 230, 230),
                       shape: const RoundedRectangleBorder(
                           side: BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return const SearchView();
-                          }));
-                        },
-                        tileColor: const Color.fromARGB(255, 231, 230, 230),
-                        shape: const RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.grey),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30))),
-                        leading: const Icon(
-                          Icons.search,
-                          color: Color.fromARGB(255, 190, 136, 86),
-                        ),
-                        title: const Text(
-                          'Wyszukaj po tytule lub tekście...',
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Color.fromARGB(255, 100, 99, 99)),
-                        ),
+                      leading: const Icon(
+                        Icons.search,
+                        color: Color.fromARGB(255, 190, 136, 86),
                       ),
-                    )),
+                      title: const Text(
+                        'Wyszukaj po tytule lub tekście...',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Color.fromARGB(255, 100, 99, 99)),
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 3,
                 ),
