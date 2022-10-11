@@ -40,10 +40,18 @@ class Hymn {
       throw Exception(e);
     } */
 
-/*     db
-        .collection("hymns")
-        .get()
-        .then((value) => print('Successfully fetched!')); */
+    final user = <String, dynamic>{
+      "first": "Ada",
+      "last": "Lovelace",
+      "born": 1815
+    };
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .add(user)
+        .then((DocumentReference doc) =>
+            // ignore: avoid_print
+            print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   factory Hymn.fromFirestore(

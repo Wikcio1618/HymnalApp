@@ -40,7 +40,7 @@ dependencies:
   google_fonts: ^3.0.1
   search_page: ^2.2.0
   firebase_core: ^1.23.0
-  cloud_firestore: ^3.4.9
+  cloud_firestore: ^3.5.1
 
 dev_dependencies:
   flutter_test:

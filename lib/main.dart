@@ -4,13 +4,10 @@ import 'package:hymnal_app/root.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
   await Firebase.initializeApp(
-    name: 'app',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

@@ -7,8 +7,6 @@ import 'package:hymnal_app/search/search_keyboard.dart';
 import 'package:hymnal_app/search/search_nothing.dart';
 import 'package:hymnal_app/search/search_songbook.dart';
 
-import 'model/hymn.dart';
-
 class Search extends StatefulWidget {
   const Search({super.key});
 
@@ -100,7 +98,7 @@ class _SearchState extends State<Search> {
         onPressed: () {
           var db = FirebaseFirestore.instance;
           db.collection("hymns").get().then((value) {
-            print(value);
+            print(value.docs);
           });
           onSearchOptionTap(index);
           FocusScope.of(context).requestFocus(FocusNode());

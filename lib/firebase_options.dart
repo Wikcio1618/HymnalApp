@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCpscO3wZUB3ct84G69F6rxkFv53yPuiOo',
-    appId: '1:828731160369:web:b62d638154c0096d9d6210',
-    messagingSenderId: '828731160369',
-    projectId: 'hymnalapp-8ecd4',
-    authDomain: 'hymnalapp-8ecd4.firebaseapp.com',
-    storageBucket: 'hymnalapp-8ecd4.appspot.com',
-    measurementId: 'G-STGD3TKNL8',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDSor8oMj5aaTTqiSqaNnBZfVogfdWt5Tg',
     appId: '1:828731160369:android:36ca06f176a180e89d6210',
@@ -62,16 +58,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBzLbRMJm59QopNOk0r52F2-NH1RqWJnHk',
-    appId: '1:828731160369:ios:f478656f3e1c347b9d6210',
-    messagingSenderId: '828731160369',
-    projectId: 'hymnalapp-8ecd4',
-    storageBucket: 'hymnalapp-8ecd4.appspot.com',
-    iosClientId: '828731160369-om63d1r5qgtn0voahgohui820eoll69u.apps.googleusercontent.com',
-    iosBundleId: 'com.example.hymnalApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBzLbRMJm59QopNOk0r52F2-NH1RqWJnHk',
     appId: '1:828731160369:ios:f478656f3e1c347b9d6210',
     messagingSenderId: '828731160369',
