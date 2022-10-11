@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 // firestore problems are gone. if they are there checkout GitHub folder. Firestore in branch firestore
 // I went into a rabbit hole trying to keep state of separate navigation pages and call animations when doing so.
 // It was an upstream struggle so there might have been added appriopriate tools to use routing by the time I come back to this project
-// However I might be on the verge of finishing needed changes to do so. As you can see animation and state is working, but I only replaced category_discover route
+// However I might be on the verge of finishing needed changes to do so (deleteRoutes branch). As you can see animation and state is working, but I only replaced category_discover route
 // When it comes to data maintanance I went for online database beacause it might be more convenient. Voting may be implemented and songs updated in real time. User needs internet connection though
 // What I havent figured out is how to store ~akordy~. Using array to get info about position and type of ~akord~ is best i came up with. Then go with latex package. Maybe use HTML?
 
