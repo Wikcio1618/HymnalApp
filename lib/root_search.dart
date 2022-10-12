@@ -43,11 +43,61 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
       ),
       const Divider(color: Color.fromARGB(255, 190, 136, 86)),
     ];
-    if (state.isSearchBarVisible) builder.add(_buildSearchBox());
+    if (state.isSearchBarVisible) {
+      builder.add(const Divider(color: Color.fromARGB(255, 190, 136, 86)));
+      builder.add(_buildSearchBox());
+      builder.add(const SizedBox(
+        height: 3,
+      ));
+    }
     return builder;
   }
 
-  Widget _buildSearchBox() => 
+  Widget _buildSearchBox() => Padding(
+        padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _customSearchOutlinedButton('Alfabetycznie', 0),
+                const SizedBox(width: 5),
+                _customSearchOutlinedButton('Śpiewniki', 1),
+                const SizedBox(width: 5),
+                _customSearchOutlinedButton('Kategorie', 2),
+              ],
+            ),
+            Hero(
+                tag: 'searchBar',
+                child: Card(
+                  shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const SearchView();
+                      }));
+                    },
+                    tileColor: const Color.fromARGB(255, 231, 230, 230),
+                    shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    leading: const Icon(
+                      Icons.search,
+                      color: Color.fromARGB(255, 190, 136, 86),
+                    ),
+                    title: const Text(
+                      'Wyszukaj po tytule lub tekście...',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Color.fromARGB(255, 100, 99, 99)),
+                    ),
+                  ),
+                )),
+          ],
+        ),
+      );
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {

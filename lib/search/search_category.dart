@@ -36,8 +36,9 @@ class _CategoryMenuState extends State<CategoryMenu> {
   }
 
   Widget buttonBuilder(BuildContext context, int index) {
-    return Consumer<StateAndSongNotifier>(
-      builder: (context, state, child) => OutlinedButton(
+    return Hero(
+      tag: "categoryButton$index",
+      child: OutlinedButton(
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(Categories.values[index].color),
@@ -50,8 +51,10 @@ class _CategoryMenuState extends State<CategoryMenu> {
               ),
             )),
         onPressed: () {
-          state.changeCategoryState(index);
-          state.changeSearchBarVisibility(false);
+          Provider.of<StateAndSongNotifier>(context, listen: false)
+              .changeCategoryState(index);
+          Provider.of<StateAndSongNotifier>(context, listen: false)
+              .changeSearchBarVisibility(false);
         },
         child: Text(
             style: const TextStyle(fontSize: 26),
