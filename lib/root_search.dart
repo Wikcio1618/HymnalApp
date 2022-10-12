@@ -5,6 +5,8 @@ import 'package:hymnal_app/search/search_category.dart';
 import 'package:hymnal_app/search/search_keyboard.dart';
 import 'package:hymnal_app/search/search_nothing.dart';
 import 'package:hymnal_app/search/search_songbook.dart';
+import 'package:hymnal_app/services/navigation_song_notifier.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -27,68 +29,25 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.5;
-    return _customSearchContainer();
+    return Consumer<StateAndSongNotifier>(
+        builder: (context, state, child) =>
+            Column(children: _buildSearchPageContent(state)));
   }
 
-  Widget _customSearchContainer() => Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: searchBody[currSearch]),
-          ),
-          const Divider(color: Color.fromARGB(255, 190, 136, 86)),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    _customSearchOutlinedButton('Alfabetycznie', 0),
-                    const SizedBox(width: 5),
-                    _customSearchOutlinedButton('Śpiewniki', 1),
-                    const SizedBox(width: 5),
-                    _customSearchOutlinedButton('Kategorie', 2),
-                  ],
-                ),
-                Hero(
-                  tag: 'searchBar',
-                  child: Card(
-                    shape: const RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return const SearchView();
-                        }));
-                      },
-                      tileColor: const Color.fromARGB(255, 231, 230, 230),
-                      shape: const RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.all(Radius.circular(30))),
-                      leading: const Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 190, 136, 86),
-                      ),
-                      title: const Text(
-                        'Wyszukaj po tytule lub tekście...',
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Color.fromARGB(255, 100, 99, 99)),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
+  List<Widget> _buildSearchPageContent(StateAndSongNotifier state) {
+    var builder = [
+      Expanded(
+        child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: searchBody[currSearch]),
+      ),
+      const Divider(color: Color.fromARGB(255, 190, 136, 86)),
+    ];
+    if (state.isSearchBarVisible) builder.add(_buildSearchBox());
+    return builder;
+  }
+
+  Widget _buildSearchBox() => 
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
