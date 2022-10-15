@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hymnal_app/root.dart';
 import 'firebase_options.dart';
 
-Future<void> main() async {
+void main() {
   runApp(const MyApp());
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 }
 
 class MyApp extends StatefulWidget {

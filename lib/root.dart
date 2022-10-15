@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/root_home.dart';
 import 'package:hymnal_app/root_collections.dart';
 import 'package:hymnal_app/root_search.dart';
+
+import 'model/hymn.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -15,6 +19,25 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pagesWidgets = const [Home(), Search(), Collections()];
   List<String> pagesTitles = const ['Początek', 'Szukaj', 'Moje śpiewniki'];
   bool isSwitched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHymns();
+  }
+
+  void fetchHymns() async {
+    await Firebase.initializeApp();
+    final ref = FirebaseFirestore.instance.collection("hymns").withConverter(
+        fromFirestore: Hymn.fromFirestore,
+        toFirestore: (Hymn hymn, _) => hymn.toFirestore());
+
+    await ref.get().then((snapshots) {
+      for (var hymn in snapshots.docs) {
+        Hymn.hymns.add(hymn.data());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

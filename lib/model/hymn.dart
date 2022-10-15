@@ -18,41 +18,7 @@ class Hymn {
   static final db = FirebaseFirestore.instance;
   static List<Hymn> hymns = [];
 
-  static Future<void> fetchHymns() async {
-/*     await db
-        .collection('hymns')
-        .get()
-        .then((value) => print(value.docs), onError: (e) => throw Exception(e)); */
-/*     await FirebaseFirestore.instance.collection('/hymns').get().then((event) {
-      for (var doc in event.docs) {
-        print("${doc.id} => ${doc.data()}");
-      }
-    }, onError: (e) => throw Exception(e)); */
-
-    /* final ref = FirebaseFirestore.instance
-        .collection("hymns")
-        .withConverter<Hymn>(
-            fromFirestore: Hymn.fromFirestore,
-            toFirestore: (Hymn hymn, _) => hymn.toFirestore());
-    await ref.get().then((value) {
-      print(value.docs);
-    } */ /* , onError: (e) {
-      throw Exception(e);
-    } */
-
-    final user = <String, dynamic>{
-      "first": "Ada",
-      "last": "Lovelace",
-      "born": 1815
-    };
-
-    FirebaseFirestore.instance
-        .collection("users")
-        .add(user)
-        .then((DocumentReference doc) =>
-            // ignore: avoid_print
-            print('DocumentSnapshot added with ID: ${doc.id}'));
-  }
+  static Future<void> fetchHymns() async {}
 
   factory Hymn.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -63,11 +29,10 @@ class Hymn {
       title: data?['title'],
       text: data?['text'],
       votes: data?['votes'],
-      songbooks:
-          data?['songbooks'] is Iterable ? List.from(data?['songbooks']) : null,
-      categories: data?['categories'] is Iterable
-          ? List.from(data?['categories'])
-          : null,
+      songbooks: List.generate(
+          data?['songbooks'].length, (index) => Songbooks.values[index]),
+      categories: List.generate(
+          data?['songbooks'].length, (index) => Categories.values[index]),
     );
   }
 

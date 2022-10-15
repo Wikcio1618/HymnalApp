@@ -96,12 +96,8 @@ class _SearchState extends State<Search> {
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
-          var db = FirebaseFirestore.instance;
-          db.collection("hymns").get().then((value) {
-            print(value.docs);
-          });
           onSearchOptionTap(index);
-          FocusScope.of(context).requestFocus(FocusNode());
+          // FocusScope.of(context).requestFocus(FocusNode());
         },
         style: ButtonStyle(
             backgroundColor: selected[index]
