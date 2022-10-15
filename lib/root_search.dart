@@ -92,7 +92,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
           onSearchOptionTap(index);
-          FocusScope.of(context).requestFocus(FocusNode());
+          // FocusScope.of(context).requestFocus(FocusNode());
         },
         style: ButtonStyle(
             backgroundColor: selected[index]

@@ -1,60 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'enums.dart';
 
 class Hymn {
-  final int? id;
-  final String title;
-  final String text;
-  final List<Songbooks>? songbooks;
-  final List<Categories>? categories;
+  String title;
+  String text;
+  int? votes;
+  List<Songbooks>? songbooks;
+  List<Categories>? categories;
 
-  const Hymn(
-      {this.id,
-      required this.title,
+  Hymn(
+      {required this.title,
       required this.text,
+      this.votes,
       this.songbooks,
       this.categories});
 
-  static List<Hymn> hymns = [
-    const Hymn(
-        title: 'Cudowna boża łaska',
-        text: 'twa, zbawiła z grzechów mnie..',
-        songbooks: [Songbooks.glosWiary],
-        categories: [Categories.radosne]),
-    const Hymn(
-        title: 'Cudowna boża łaska',
-        text: 'twa, zbawiłaa z grzechów mnie..',
-        songbooks: [Songbooks.glosWiary],
-        categories: [Categories.radosne]),
-    const Hymn(
-        title: 'Gdy na ten świat',
-        text: 'spoglądam wielki Boże',
-        songbooks: [Songbooks.glosWiary],
-        categories: [Categories.radosne, Categories.szybkie]),
-    const Hymn(title: 'Błogo mi', text: 'W Panu wieczny mam dział', songbooks: [
-      Songbooks.pielgrzym
-    ], categories: [
-      Categories.radosne,
-      Categories.szybkie,
-      Categories.smutne
-    ]),
-    const Hymn(
-        title: 'Błogo mi',
-        text: 'W Panu wieczny mam dział',
-        songbooks: [Songbooks.pielgrzym],
-        categories: [Categories.smutne]),
-    const Hymn(
-        title: 'Błogo mi',
-        text: 'W Panu wieczny mam dział',
-        songbooks: [Songbooks.wedrowiec],
-        categories: [Categories.radosne, Categories.szybkie]),
-    const Hymn(
-        title: 'Błogo mi',
-        text: 'W Panu wieczny mam dział',
-        songbooks: [Songbooks.wedrowiec, Songbooks.glosWiary],
-        categories: [Categories.smutne]),
-  ];
+  static final db = FirebaseFirestore.instance;
+  static List<Hymn> hymns = [];
 
-  static List<String> getTitles() {
+  static Future<void> fetchHymns() async {}
+
+  factory Hymn.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return Hymn(
+      title: data?['title'],
+      text: data?['text'],
+      votes: data?['votes'],
+      songbooks: List.generate(
+          data?['songbooks'].length, (index) => Songbooks.values[index]),
+      categories: List.generate(
+          data?['songbooks'].length, (index) => Categories.values[index]),
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "title": title,
+      "text": text,
+      if (votes != null) "votes": votes,
+      if (songbooks != null) "songbooks": songbooks,
+      if (categories != null) "categories": categories,
+    };
+  }
+
+  List<String> getTitles() {
     List<String> titles = [];
     for (var hymn in hymns) {
       titles.add(hymn.title);

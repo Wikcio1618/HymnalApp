@@ -13,7 +13,10 @@ class _SongState extends State<Song> {
   @override
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, notifier, child) {
-      return Center(child: Text(notifier.currSong.title));
+      return Center(
+          child: notifier.currSong == null
+              ? const Text("Nie wybrano pieśni")
+              : Text(notifier.currSong!.text));
     });
   }
 }

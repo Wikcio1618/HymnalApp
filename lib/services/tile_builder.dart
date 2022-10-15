@@ -29,7 +29,7 @@ class TileBuilder {
   static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
         builder: (context, state, child) => ListTile(
           title: Text(hymn.title),
-          subtitle: Text(hymn.text),
+          subtitle: Text(hymn.text.trim().replaceRange(50, null, '...')),
           onTap: () {
             state.changeState(0);
             state.changeSong(hymn);

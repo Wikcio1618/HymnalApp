@@ -4,7 +4,7 @@ import '../model/hymn.dart';
 
 class StateAndSongNotifier extends ChangeNotifier {
   int currPage = 0;
-  Hymn currSong = Hymn.hymns[0];
+  Hymn? currSong;
   bool isAppBarVisible = true;
 
   void changeSong(Hymn hymn) {

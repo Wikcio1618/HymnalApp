@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/root_song.dart';
 import 'package:hymnal_app/root_collections.dart';
 import 'package:hymnal_app/root_search.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
+
+import 'model/hymn.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -25,6 +29,7 @@ class _RootPageState extends State<RootPage>
   @override
   void initState() {
     super.initState();
+    fetchHymns();
     controller = AnimationController(
       duration: const Duration(milliseconds: 170),
       vsync: this,
@@ -40,6 +45,19 @@ class _RootPageState extends State<RootPage>
     animation = Tween<Offset>(begin: Offset(startPos, 0), end: Offset.zero)
         .animate(controller);
     controller.forward();
+  }
+
+  void fetchHymns() async {
+    await Firebase.initializeApp();
+    final ref = FirebaseFirestore.instance.collection("hymns").withConverter(
+        fromFirestore: Hymn.fromFirestore,
+        toFirestore: (Hymn hymn, _) => hymn.toFirestore());
+
+    await ref.get().then((snapshots) {
+      for (var hymn in snapshots.docs) {
+        Hymn.hymns.add(hymn.data());
+      }
+    });
   }
 
   @override
