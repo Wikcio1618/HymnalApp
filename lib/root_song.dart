@@ -18,7 +18,7 @@ class _SongState extends State<Song> {
     return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return state.currSong == null
           ? const Text('Nie wybrano pieśni')
-          : TeXView(
+          : const TeXView(
               child: TeXViewDocument(r"""<h2>Flutter \( \rm\\TeX \)</h2>"""));
 
       /* Center(child: Text(notifier.currSong.title)); */
