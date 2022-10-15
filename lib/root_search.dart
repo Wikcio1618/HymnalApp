@@ -35,13 +35,12 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   }
 
   List<Widget> _buildSearchPageContent(StateAndSongNotifier state) {
-    var builder = [
+    List<Widget> builder = [
       Expanded(
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: searchBody[currSearch]),
       ),
-      const Divider(color: Color.fromARGB(255, 190, 136, 86)),
     ];
     if (state.isSearchBarVisible) {
       builder.add(const Divider(color: Color.fromARGB(255, 190, 136, 86)));
@@ -102,7 +101,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
           onSearchOptionTap(index);
-          FocusScope.of(context).requestFocus(FocusNode());
+          // FocusScope.of(context).requestFocus(FocusNode());
         },
         style: ButtonStyle(
             backgroundColor: selected[index]
