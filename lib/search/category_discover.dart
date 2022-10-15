@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal_app/model/enums.dart';
 import 'package:hymnal_app/model/hymn.dart';
 import 'package:hymnal_app/services/tile_builder.dart';
 
@@ -9,15 +8,13 @@ class DiscoverCategoryPage extends StatelessWidget {
   final int option;
   late final List<Hymn> hymnsOfCategory = Hymn.getHymnsOfCategory(option);
 
-// TODO - make it a widget not route
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(Categories.values[option].name)),
-      body: ListView.builder(
-          itemCount: hymnsOfCategory.length, itemBuilder: tileBuilder),
-    );
+    return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: hymnsOfCategory.length,
+        itemBuilder: tileBuilder);
   }
 
   Widget tileBuilder(BuildContext context, int index) =>
