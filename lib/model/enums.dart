@@ -2,7 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-enum Songbooks { pielgrzym, wedrowiec, glosWiary }
+enum Songbooks {
+  pielgrzym,
+  wedrowiec,
+  glosWiary,
+  hillsong,
+  openSong,
+  psalterz,
+  xxwiek,
+  xixwiek,
+}
 
 extension SongbooksExtension on Songbooks {
   String get name {
@@ -13,6 +22,16 @@ extension SongbooksExtension on Songbooks {
         return "Wędrowiec";
       case Songbooks.glosWiary:
         return "Głos Wiary";
+      case Songbooks.hillsong:
+        return "Hillsong";
+      case Songbooks.openSong:
+        return "Open Song";
+      case Songbooks.psalterz:
+        return "Psałterz";
+      case Songbooks.xxwiek:
+        return "XX wiek";
+      case Songbooks.xixwiek:
+        return "XIX wiek";
     }
   }
 }

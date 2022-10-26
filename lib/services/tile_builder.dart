@@ -4,32 +4,37 @@ import 'package:provider/provider.dart';
 import '../model/hymn.dart';
 
 class TileBuilder {
-  static Widget customRubricTile(String label) => Column(children: [
-        const SizedBox(
-          height: 30,
-        ),
-        Container(
-          decoration: const BoxDecoration(
+  static Widget customRubricTile(String label, BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: Column(children: [
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            decoration: BoxDecoration(
               border: Border(
-                  bottom:
-                      BorderSide(color: Color.fromARGB(255, 231, 230, 230)))),
-          child: ListTile(
-            leading: Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
-                color: Color.fromARGB(255, 190, 136, 86),
+                bottom:
+                    BorderSide(color: Theme.of(context).colorScheme.secondary),
+              ),
+            ),
+            child: ListTile(
+              leading: Text(
+                label,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
             ),
           ),
-        ),
-      ]);
+        ]),
+      );
 
   static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
         builder: (context, state, child) => ListTile(
           title: Text(hymn.title),
-          subtitle: Text(hymn.text.trim().replaceRange(50, null, '...')),
+          subtitle: Text(hymn.text.trim().replaceRange(40, null, '...')),
           onTap: () {
             state.changeState(0);
             state.changeSong(hymn);

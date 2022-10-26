@@ -42,7 +42,9 @@ dependencies:
   provider: ^6.0.3
   firebase_core: ^1.23.0
   cloud_firestore: ^3.5.1
+  wheel_chooser: ^1.0.0
   flutter_tex: ^4.0.3+4
+  inner_shadow_widget: ^0.0.3
 
 dev_dependencies:
   flutter_test:

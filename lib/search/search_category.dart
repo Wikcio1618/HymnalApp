@@ -20,7 +20,6 @@ class _CategoryMenuState extends State<CategoryMenu> {
         padding: const EdgeInsets.all(20.0),
         child: state.categoryState == null
             ? GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -36,30 +35,27 @@ class _CategoryMenuState extends State<CategoryMenu> {
   }
 
   Widget buttonBuilder(BuildContext context, int index) {
-    return Hero(
-      tag: "categoryButton$index",
-      child: OutlinedButton(
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(Categories.values[index].color),
-            foregroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 111, 86, 55)),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                side: const BorderSide(width: 2, color: Colors.black),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            )),
-        onPressed: () {
-          Provider.of<StateAndSongNotifier>(context, listen: false)
-              .changeCategoryState(index);
-          Provider.of<StateAndSongNotifier>(context, listen: false)
-              .changeSearchBarVisibility(false);
-        },
-        child: Text(
-            style: const TextStyle(fontSize: 26),
-            Hymn.getCategoriesSortedAlphabetically()[index].name),
-      ),
+    return OutlinedButton(
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all(Categories.values[index].color),
+          foregroundColor:
+              MaterialStateProperty.all(const Color.fromARGB(255, 111, 86, 55)),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              side: const BorderSide(width: 2, color: Colors.black),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          )),
+      onPressed: () {
+        Provider.of<StateAndSongNotifier>(context, listen: false)
+            .changeCategoryState(index);
+        Provider.of<StateAndSongNotifier>(context, listen: false)
+            .changeSearchBarVisibility(false);
+      },
+      child: Text(
+          style: const TextStyle(fontSize: 26),
+          Hymn.getCategoriesSortedAlphabetically()[index].name),
     );
   }
 }

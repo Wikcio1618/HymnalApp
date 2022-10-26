@@ -119,7 +119,7 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.23.0"
+    version: "1.24.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -183,7 +183,14 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
+  inner_shadow_widget:
+    dependency: "direct main"
+    description:
+      name: inner_shadow_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   js:
     dependency: transitive
     description:
@@ -288,7 +295,7 @@ packages:
       name: path_provider_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   path_provider_windows:
     dependency: transitive
     description:
@@ -323,14 +330,14 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.3"
+    version: "6.0.4"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   search_page:
     dependency: "direct main"
     description:
@@ -434,13 +441,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.5"
+  wheel_chooser:
+    dependency: "direct main"
+    description:
+      name: wheel_chooser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   win32:
     dependency: transitive
     description:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   xdg_directories:
     dependency: transitive
     description:

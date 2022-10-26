@@ -30,34 +30,46 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     timeDilation = 1.5;
     return Consumer<StateAndSongNotifier>(
-        builder: (context, state, child) =>
-            Column(children: _buildSearchPageContent(state)));
+      builder: (context, state, child) => Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: _buildSearchPageContent(state, context)),
+    );
   }
 
-  List<Widget> _buildSearchPageContent(StateAndSongNotifier state) {
+  List<Widget> _buildSearchPageContent(
+      StateAndSongNotifier state, BuildContext context) {
     List<Widget> builder = [
-      Expanded(
-        child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: searchBody[currSearch]),
-      ),
+      Flexible(
+        child: SizedBox(height: double.infinity, child: searchBody[currSearch]),
+      )
     ];
     if (state.isSearchBarVisible) {
-      builder.add(const Divider(color: Color.fromARGB(255, 190, 136, 86)));
-      builder.add(_buildSearchBox());
-      builder.add(const SizedBox(
-        height: 3,
-      ));
+      builder.add(_buildSearchBox(context));
     }
     return builder;
   }
 
-  Widget _buildSearchBox() => Padding(
+  Widget _buildSearchBox(BuildContext context) {
+    return ClipRRect(
+      child: Container(
+        margin: const EdgeInsets.only(top: 6),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, -1.0), //(x,y)
+              blurRadius: 6.0,
+            )
+          ],
+        ),
         padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
         child: Column(
           children: [
+            // const Divider(),
             Row(
               children: [
+                const SizedBox(width: 5),
                 _customSearchOutlinedButton('Alfabetycznie', 0),
                 const SizedBox(width: 5),
                 _customSearchOutlinedButton('Śpiewniki', 1),
@@ -66,37 +78,40 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
               ],
             ),
             Hero(
-                tag: 'searchBar',
-                child: Card(
+              tag: 'searchBar',
+              child: Card(
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const SearchView();
+                    }));
+                  },
+                  tileColor: const Color.fromARGB(255, 231, 230, 230),
                   shape: const RoundedRectangleBorder(
                       side: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(Radius.circular(30))),
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const SearchView();
-                      }));
-                    },
-                    tileColor: const Color.fromARGB(255, 231, 230, 230),
-                    shape: const RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    leading: const Icon(
-                      Icons.search,
-                      color: Color.fromARGB(255, 190, 136, 86),
-                    ),
-                    title: const Text(
-                      'Wyszukaj po tytule lub tekście...',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Color.fromARGB(255, 100, 99, 99)),
-                    ),
+                  leading: Icon(
+                    Icons.search,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
-                )),
+                  title: const Text(
+                    'Wyszukaj po tytule lub tekście...',
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Color.fromARGB(255, 100, 99, 99)),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-      );
+      ),
+    );
+  }
 
   Widget _customSearchOutlinedButton(String label, int index) => OutlinedButton(
         onPressed: () {
@@ -104,12 +119,14 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
           // FocusScope.of(context).requestFocus(FocusNode());
         },
         style: ButtonStyle(
-            backgroundColor: selected[index]
-                ? const MaterialStatePropertyAll(
-                    Color.fromARGB(255, 231, 230, 230))
-                : null,
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)))),
+          backgroundColor: selected[index]
+              ? const MaterialStatePropertyAll(
+                  Color.fromARGB(255, 231, 230, 230))
+              : null,
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          ),
+        ),
         child: Text(label),
       );
 

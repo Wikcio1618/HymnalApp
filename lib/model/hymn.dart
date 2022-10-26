@@ -29,11 +29,12 @@ class Hymn {
       title: data?['title'],
       text: data?['text'],
       votes: data?['votes'],
-      songbooks: List.generate(
-          data?['songbooks'].length, (index) => Songbooks.values[index]),
+      songbooks: List.generate(data?['songbooks'].length,
+          (index) => Songbooks.values[data?['songbooks'][index]]),
       categories: List.generate(
           data?['songbooks'].length, (index) => Categories.values[index]),
     );
+    // TODO - implement prevention from number greater than enum length
   }
 
   Map<String, dynamic> toFirestore() {

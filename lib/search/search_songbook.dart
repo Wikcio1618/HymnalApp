@@ -15,19 +15,21 @@ class SongbookMenu extends StatefulWidget {
 class _SongbookMenuState extends State<SongbookMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(30.0),
-      child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: 5,
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15,
-          ),
-          itemCount: Songbooks.values.length,
-          itemBuilder: buttonBuilder),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              childAspectRatio: 5,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+            ),
+            itemCount: Songbooks.values.length,
+            itemBuilder: buttonBuilder),
+      ),
     );
   }
 
@@ -46,9 +48,9 @@ class _SongbookMenuState extends State<SongbookMenu> {
       child: OutlinedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 188, 43, 43)),
+                Theme.of(context).colorScheme.secondary),
             foregroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 219, 201, 41)),
+                Theme.of(context).colorScheme.onSecondary),
             // side: MaterialStateProperty.all(
             //     const BorderSide(color: Colors.grey, width: 2)),
             shadowColor: MaterialStateProperty.all(Colors.black),
