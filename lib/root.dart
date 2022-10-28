@@ -64,12 +64,10 @@ class _RootPageState extends State<RootPage>
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return Scaffold(
-        appBar: !state.isAppBarVisible
-            ? null
-            : AppBar(
-                title: Text(pagesTitles[state.currPage]),
-                centerTitle: true,
-              ),
+        appBar: AppBar(
+          title: Text(pagesTitles[state.currPage]),
+          centerTitle: true,
+        ),
         body: _buildScreens(state),
         drawer: _buildCustomDrawer(),
         bottomNavigationBar: _buildCustomNavigationBar(state),

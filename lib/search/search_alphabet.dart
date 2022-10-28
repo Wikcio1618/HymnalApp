@@ -166,8 +166,6 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
       for (var hymn in hymnsSorted) {
         if (hymn.title[0].toLowerCase() == letters[letter].toLowerCase()) {
           column.add(TileBuilder.customLibraryTile(hymn));
-        } else {
-          break;
         }
       }
     } else {

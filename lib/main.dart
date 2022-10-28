@@ -45,12 +45,12 @@ class _MyAppState extends State<MyApp> {
         }, */
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          backgroundColor: const Color.fromARGB(255, 234, 247, 239),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 242, 248, 244),
+          backgroundColor: Color.fromARGB(255, 245, 247, 234),
+          scaffoldBackgroundColor: Color.fromARGB(255, 248, 246, 242),
           appBarTheme: AppBarTheme(
             centerTitle: true,
             elevation: 0,
-            backgroundColor: const Color.fromARGB(255, 238, 245, 240),
+            backgroundColor: Color.fromARGB(255, 245, 243, 238),
             titleTextStyle: TextStyle(
                 color: Colors.grey[800],
                 letterSpacing: 1.5,
