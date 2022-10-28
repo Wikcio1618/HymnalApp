@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chord/flutter_chord.dart';
 
@@ -19,16 +18,13 @@ class _SongState extends State<Song> {
   Widget build(BuildContext context) {
     return Consumer<StateAndSongNotifier>(builder: (context, state, child) {
       return Padding(
-          padding: EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 30, right: 30),
           child: LyricsRenderer(
               widgetPadding: 20,
-              leadingWidget: SizedBox(
-                height: 100,
-              ),
               showChord: showChord,
               lyrics: state.currSong != null ? state.currSong!.text : 'no',
-              textStyle: TextStyle(color: Colors.black, fontSize: 16),
-              chordStyle: TextStyle(
+              textStyle: const TextStyle(color: Colors.black, fontSize: 16),
+              chordStyle: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
