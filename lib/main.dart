@@ -19,8 +19,8 @@ import 'model/collection.dart';
 // What I havent figured out is how to store ~akordy~. Using array to get info about position and type of ~akord~ is best i came up with. Then go with latex package. Maybe use HTML?
 
 void main() async {
-  Hive.init(Directory.current.path);
-  await Hive.openBox<Collection>('collections');
+  // Hive.init(Directory.current.path);
+  // await Hive.openBox<Collection>('collections');
 
   runApp(const MyApp());
   await Firebase.initializeApp();
