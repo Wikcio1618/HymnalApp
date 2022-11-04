@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:hymnal_app/root.dart';
 
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
+
+import 'model/collection.dart';
 
 // TODO - note for future me:
 // firestore problems are gone. if they are there checkout GitHub folder. Firestore in branch firestore
@@ -12,8 +18,12 @@ import 'package:provider/provider.dart';
 // When it comes to data maintanance I went for online database beacause it might be more convenient. Voting may be implemented and songs updated in real time. User needs internet connection though
 // What I havent figured out is how to store ~akordy~. Using array to get info about position and type of ~akord~ is best i came up with. Then go with latex package. Maybe use HTML?
 
-void main() {
+void main() async {
+  Hive.init(Directory.current.path);
+  await Hive.openBox<Collection>('collections');
+
   runApp(const MyApp());
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {

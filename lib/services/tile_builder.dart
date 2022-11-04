@@ -33,9 +33,11 @@ class TileBuilder {
 
   static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
         builder: (context, state, child) => ListTile(
+          shape: const RoundedRectangleBorder(
+              side: BorderSide(color: Colors.black45)),
           title: Text(hymn.title),
           subtitle: hymn.text.length >= 40
-              ? Text(hymn.text.trim().replaceRange(40, null, '...'))
+              ? Text(hymn.text.trim().replaceRange(40, null, '..'))
               : Text(hymn.text),
           onTap: () {
             state.changeState(0);
