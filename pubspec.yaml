@@ -45,6 +45,7 @@ dependencies:
   wheel_chooser: ^1.0.0
   inner_shadow_widget: ^0.0.3
   flutter_chord: ^0.1.2
+  hive: ^2.2.3
 
 dev_dependencies:
   flutter_test:
