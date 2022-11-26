@@ -48,6 +48,7 @@ class _RootPageState extends State<RootPage>
   }
 
   void fetchHymns() async {
+    await Firebase.initializeApp();
     final ref = FirebaseFirestore.instance.collection("hymns").withConverter(
         fromFirestore: Hymn.fromFirestore,
         toFirestore: (Hymn hymn, _) => hymn.toFirestore());

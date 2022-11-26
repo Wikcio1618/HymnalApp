@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 import '../model/hymn.dart';
+import '../song_page.dart';
 
 class TileBuilder {
   static Widget customRubricTile(String label, BuildContext context) => Padding(
@@ -40,6 +41,8 @@ class TileBuilder {
               ? Text(hymn.text.trim().replaceRange(40, null, '..'))
               : Text(hymn.text),
           onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SongPage()));
             state.changeState(0);
             state.changeSong(hymn);
             // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
