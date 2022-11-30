@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hymnal_app/main.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'model/collection.dart';
 
 class Collections extends StatefulWidget {
   const Collections({super.key});
@@ -8,10 +11,36 @@ class Collections extends StatefulWidget {
 }
 
 class _CollectionsState extends State<Collections> {
+  late Box<Collection> box;
+  var increment = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    box = Hive.box<Collection>(collectionsBox);
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
-    return Center(child: Text('dummy'));
+    return Column(children: [
+      FloatingActionButton(onPressed: (() {
+        box.put('key$increment', Collection(name: 'name$increment'));
+        increment++;
+      })),
+      ValueListenableBuilder(
+        valueListenable: box.listenable(),
+        builder: (context, box, child) => Flexible(
+          child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: box.toMap().keys.length,
+              itemBuilder: ((context, index) => Text(box.getAt(index)!.name))),
+        ),
+      ),
+      FloatingActionButton(onPressed: () {
+        box.deleteAt(0);
+      })
+    ]);
 
     /* TweenAnimationBuilder(
       tween: Tween<Offset>(begin: Offset(startPos, 0), end: Offset(endPos, 0)),

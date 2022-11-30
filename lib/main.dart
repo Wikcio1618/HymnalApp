@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hymnal_app/root.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hymnal_app/model/collection.dart';
+import 'package:hymnal_app/root.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 // TODO - note for future me:
 // firestore problems are gone. if they are there checkout GitHub folder. Firestore in branch firestore
@@ -16,9 +19,16 @@ import 'package:provider/provider.dart';
 const collectionsBox = 'collectionsBox';
 
 void main() async {
-  // await Hive.initFlutter();
-  await Hive.openBox<String>(collectionsBox);
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await path_provider.getApplicationDocumentsDirectory();
+
+  Hive
+    ..init(directory.path)
+    ..registerAdapter(CollectionAdapter());
+
+  await Hive.openBox<Collection>(collectionsBox);
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

@@ -52,6 +52,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _buildSearchBox(BuildContext context) {
     return ClipRRect(
       child: Container(
+        padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
         margin: const EdgeInsets.only(top: 6),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -63,7 +64,6 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
             )
           ],
         ),
-        padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
         child: Column(
           children: [
             // const Divider(),
@@ -74,7 +74,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                 const SizedBox(width: 5),
                 _customSearchOutlinedButton('Śpiewniki', 1),
                 const SizedBox(width: 5),
-                _customSearchOutlinedButton('Kategorie', 2),
+                Expanded(child: _customSearchOutlinedButton('Kategorie', 2)),
               ],
             ),
             Hero(
