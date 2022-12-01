@@ -33,7 +33,7 @@ class _CollectionsState extends State<Collections> {
     return ValueListenableBuilder(
       valueListenable: box.listenable(),
       builder: (context, box, child) => ListView.builder(
-        itemCount: box.keys.length + 1,
+        itemCount: box.keys.length + 1, // +1 because addtile has to be included
         itemBuilder: (context, index) {
           if (index == 0) {
             return ListTile(
@@ -75,7 +75,8 @@ class _CollectionsState extends State<Collections> {
                   Navigator.of(context).pop();
                   // box.deleteAt(0);
                   box.put(
-                    textController.text,
+                    textController.text, // KEY of hive elemnts is their name
+                    // TODO - add same-name notification (nothing is added then by framework)
                     Collection(name: textController.text),
                   );
                   textController.clear();
