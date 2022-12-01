@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/main.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hymnal_app/services/tile_builder.dart';
 import 'model/collection.dart';
 
 class Collections extends StatefulWidget {
@@ -12,6 +13,7 @@ class Collections extends StatefulWidget {
 
 class _CollectionsState extends State<Collections> {
   late Box<Collection> box;
+  TextEditingController textController = TextEditingController();
   var increment = 0;
 
   @override
@@ -21,59 +23,65 @@ class _CollectionsState extends State<Collections> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
-    return Column(children: [
-      FloatingActionButton(onPressed: (() {
-        box.put('key$increment', Collection(name: 'name$increment'));
-        increment++;
-      })),
-      ValueListenableBuilder(
-        valueListenable: box.listenable(),
-        builder: (context, box, child) => Flexible(
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: box.toMap().keys.length,
-              itemBuilder: ((context, index) => Text(box.getAt(index)!.name))),
-        ),
-      ),
-      FloatingActionButton(onPressed: () {
-        box.deleteAt(0);
-      })
-    ]);
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
-    /* TweenAnimationBuilder(
-      tween: Tween<Offset>(begin: Offset(startPos, 0), end: Offset(endPos, 0)),
-      duration: Duration(seconds: 1),
-      builder: (context, offset, child) {
-        return FractionalTranslation(
-          translation: offset,
-          child: Container(
-            width: double.infinity,
-            child: Center(
-              child: child,
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: box.listenable(),
+      builder: (context, box, child) => ListView.builder(
+        itemCount: box.keys.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return ListTile(
+              title: IconButton(
+                  onPressed: () => _buildCollectionNameDialog(box),
+                  icon: const Icon(Icons.add_circle_outline_outlined)),
+            );
+          }
+          return TileBuilder.collectionTile(box.getAt(index - 1)!);
+        },
+      ),
+    );
+  }
+
+  _buildCollectionNameDialog(Box<Collection> box) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text('Nazwa twojego śpiewnika'),
+          content: TextField(
+            autocorrect: false,
+            enableSuggestions: false,
+            autofocus: true,
+            controller: textController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              border: OutlineInputBorder(borderSide: BorderSide()),
             ),
           ),
-        );
-      },
-      child: Text(
-        'animated text',
-        textScaleFactor: 3.0,
-      ),
-      onEnd: () {
-        print('onEnd');
-        Future.delayed(
-          Duration(milliseconds: 500),
-          () {
-            if (startPos == -1) {
-              setState(() {
-                startPos = 0.0;
-                endPos = 1.0;
-              });
-            }
-          },
-        );
-      },
-    ); */
-  }
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  textController.clear();
+                },
+                child: const Text('Anuluj')),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // box.deleteAt(0);
+                  box.put(
+                    textController.text,
+                    Collection(name: textController.text),
+                  );
+                  textController.clear();
+                },
+                child: const Text('Dodaj'))
+          ],
+        ),
+      );
 }

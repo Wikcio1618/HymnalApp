@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
+import '../model/collection.dart';
 import '../model/hymn.dart';
 
 class TileBuilder {
@@ -43,5 +44,9 @@ class TileBuilder {
             // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
           },
         ),
+      );
+
+  static Widget collectionTile(Collection collection) => ListTile(
+        title: Text(collection.name),
       );
 }

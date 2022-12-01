@@ -52,7 +52,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _buildSearchBox(BuildContext context) {
     return ClipRRect(
       child: Container(
-        padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
+        padding: const EdgeInsets.only(bottom: 10, right: 15, left: 15),
         margin: const EdgeInsets.only(top: 6),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
