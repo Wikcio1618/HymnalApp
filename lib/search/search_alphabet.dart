@@ -128,8 +128,9 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
       }
     } else {
       for (var hymn in hymnsSorted) {
-        if (hymn.title.toLowerCase().startsWith(RegExp(r'[^a-z][^\p{L}]'))) {
-          // TODO - Święty, święty is still in # for some reason
+        if (hymn.title
+            .toLowerCase()
+            .startsWith(RegExp(r'[^\w]ąćóńśźż', caseSensitive: false))) {
           column.add(TileBuilder.customLibraryTile(hymn));
         }
       }
