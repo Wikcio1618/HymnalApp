@@ -8,8 +8,6 @@ class SearchView extends StatelessWidget {
 
   static List<Hymn> hymns = Hymn.hymns;
 
-// TODO - make it a widget not route
-
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.5;

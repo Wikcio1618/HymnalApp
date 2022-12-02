@@ -13,19 +13,6 @@ class AlphabeticalListView extends StatefulWidget {
 }
 
 class _AlphabeticalListViewState extends State<AlphabeticalListView> {
-/*   @override
-  void initState() {
-    super.initState();
-    _itemPositionsListener.itemPositions.addListener(notifyWheel);
-  }
-
-  @override
-  void dispose() {
-    _itemPositionsListener.itemPositions
-        .removeListener(notifyWheel);
-    super.dispose();
-  } */
-
   final _letterScrollController = ItemScrollController();
   final _wheelScrollController = FixedExtentScrollController();
   final ItemPositionsListener _itemPositionsListener =
@@ -37,6 +24,7 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
     'A',
     'B',
     'C',
+    'Ć',
     'D',
     'E',
     'F',
@@ -49,14 +37,18 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
     'M',
     'N',
     'O',
+    'Ó',
     'P',
     'R',
     'S',
+    'Ś',
     'T',
     'U',
     'W',
     'Y',
     'Z',
+    'Ź',
+    'Ż',
     '#'
   ];
 
@@ -86,7 +78,7 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
               TextStyle(color: Theme.of(context).colorScheme.secondary),
           startPosition: 0,
           onValueChanged: (letter) =>
-              {_scrollListToLetter(letters.indexOf(letter))},
+              _scrollListToLetter(letters.indexOf(letter)),
           datas: letters,
         ),
       ),
@@ -94,6 +86,7 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
   }
 
   void _scrollListToLetter(int letter) {
+    // TODO - adjust the animation for UX
     _letterScrollController.scrollTo(
         index: letter,
         duration: const Duration(milliseconds: 500),
@@ -102,7 +95,6 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
 
   void notifyWheel() {
     var positions = _itemPositionsListener.itemPositions.value;
-    // _letterScrollController.itemPositionsNotifier
     int? min;
     if (positions.isNotEmpty) {
       // Determine the first visible item by finding the item with the
@@ -117,47 +109,13 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
     }
   }
 
-  void _scrollWheelToLetter(int letter) {
+/*   void _scrollWheelToLetter(int letter) {
     _wheelScrollController.animateToItem(letter,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOutQuad);
-  }
+  } */
+// Couldn't implement that well
 
-  /* Widget _buildListeningWheel() =>
-      ValueListenableBuilder<Iterable<ItemPosition>>(
-        valueListenable: _itemPositionsListener.itemPositions,
-        builder: (context, positions, child) {
-          int? min;
-          if (positions.isNotEmpty) {
-            // Determine the first visible item by finding the item with the
-            // smallest trailing edge that is greater than 0.  i.e. the first
-            // item whose trailing edge in visible in the viewport.
-            min = positions
-                .where((ItemPosition position) => position.itemTrailingEdge > 0)
-                .reduce((ItemPosition min, ItemPosition position) =>
-                    position.itemTrailingEdge < min.itemTrailingEdge
-                        ? position
-                        : min)
-                .index;
-          }
-          return WheelChooser(
-            perspective: 0.005,
-            magnification: 1.2,
-            listHeight: 400,
-            listWidth: 40,
-            selectTextStyle:
-                const TextStyle(color: Color.fromARGB(255, 190, 136, 86)),
-            unSelectTextStyle:
-                const TextStyle(color: Color.fromARGB(255, 187, 139, 95)),
-            startPosition: min,
-            controller: null,
-            onValueChanged: (letter) =>
-                {_scrollListToLetter(letters.indexOf(letter))},
-            datas: letters,
-          );
-        },
-      );
- */
   List<Widget> _buildRubricColumn(int letter) {
     List<Widget> column = [
       TileBuilder.customRubricTile(letters[letter], context)
@@ -170,48 +128,12 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
       }
     } else {
       for (var hymn in hymnsSorted) {
-        if (hymn.title.toLowerCase().startsWith(RegExp(r'[^a-z]'))) {
+        if (hymn.title.toLowerCase().startsWith(RegExp(r'[^a-z][^\p{L}]'))) {
+          // TODO - Święty, święty is still in # for some reason
           column.add(TileBuilder.customLibraryTile(hymn));
         }
       }
     }
     return column;
   }
-
-// Changed for builder of 24 columns
-  /*  List<Widget> _customColumnChildren() {
-    Iterator<String> letterIterator = letters.iterator;
-    List<Widget> columnChildren = [];
-    columnChildren.add(TileBuilder.customRubricTile(letters[0]));
-    letterIterator.moveNext();
-
-    while (letterIterator.moveNext()) {
-      Iterator<Hymn> hymnIterator = hymnsSorted.iterator;
-      columnChildren.add(TileBuilder.customRubricTile(letterIterator.current));
-      while (hymnIterator.moveNext()) {
-        if (hymnIterator.current.title
-            .toLowerCase()
-            .startsWith(letterIterator.current.toLowerCase())) {
-          columnChildren
-              .add(TileBuilder.customLibraryTile(hymnIterator.current));
-        }
-      }
-    }
-    return columnChildren;
-  } */
 }
-
-/* class customWheel extends WheelChooser {
-  final Key key;
-  const customWheel({@required key});
-
-  @override
-  State<customWheel> createState() => _customWheelState();
-}
-
-class _customWheelState extends State<customWheel> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-} */

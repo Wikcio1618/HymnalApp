@@ -9,8 +9,6 @@ class DiscoverSongbookPage extends StatelessWidget {
   final int option;
   late final List<Hymn> hymnsOfSongbook = Hymn.getHymnsOfSongbook(option);
 
-// TODO - make it a widget not route
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

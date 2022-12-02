@@ -52,6 +52,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   Widget _buildSearchBox(BuildContext context) {
     return ClipRRect(
       child: Container(
+        padding: const EdgeInsets.only(bottom: 10, right: 15, left: 15),
         margin: const EdgeInsets.only(top: 6),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -63,52 +64,49 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
             )
           ],
         ),
-        padding: const EdgeInsets.only(bottom: 10, right: 25, left: 25),
-        child: Column(
-          children: [
-            // const Divider(),
-            Row(
-              children: [
-                const SizedBox(width: 5),
-                _customSearchOutlinedButton('Alfabetycznie', 0),
-                const SizedBox(width: 5),
-                _customSearchOutlinedButton('Śpiewniki', 1),
-                const SizedBox(width: 5),
-                _customSearchOutlinedButton('Kategorie', 2),
-              ],
-            ),
-            Hero(
-              tag: 'searchBar',
-              child: Card(
+        child: Column(children: [
+          // const Divider(),
+          Row(
+            children: [
+              const SizedBox(width: 5),
+              _customSearchOutlinedButton('Alfabetycznie', 0),
+              const SizedBox(width: 5),
+              _customSearchOutlinedButton('Śpiewniki', 1),
+              const SizedBox(width: 5),
+              _customSearchOutlinedButton('Kategorie', 2),
+            ],
+          ),
+          Hero(
+            tag: 'searchBar',
+            child: Card(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.all(Radius.circular(30))),
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const SearchView();
+                  }));
+                },
+                tileColor: const Color.fromARGB(255, 231, 230, 230),
                 shape: const RoundedRectangleBorder(
                     side: BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return const SearchView();
-                    }));
-                  },
-                  tileColor: const Color.fromARGB(255, 231, 230, 230),
-                  shape: const RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  leading: Icon(
-                    Icons.search,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  title: const Text(
-                    'Wyszukaj po tytule lub tekście...',
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: Color.fromARGB(255, 100, 99, 99)),
-                  ),
+                leading: Icon(
+                  Icons.search,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                title: const Text(
+                  'Wyszukaj po tytule lub tekście...',
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Color.fromARGB(255, 100, 99, 99)),
                 ),
               ),
             ),
-          ],
-        ),
+          )
+        ]),
       ),
     );
   }
