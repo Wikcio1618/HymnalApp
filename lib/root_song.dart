@@ -29,7 +29,7 @@ class _SongState extends State<Song> {
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
               onTapChord: (String chord) {
-                print('Clicked: $chord');
+                // TODO - (2nd priority) add tooltip with chord picture
               }));
     });
   }

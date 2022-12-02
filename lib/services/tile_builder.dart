@@ -48,5 +48,8 @@ class TileBuilder {
 
   static Widget collectionTile(Collection collection) => ListTile(
         title: Text(collection.name),
+        onTap: () {
+          // TODO - Open collection's list of hymns
+        },
       );
 }
