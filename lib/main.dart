@@ -66,6 +66,14 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           backgroundColor: const Color.fromARGB(255, 245, 247, 234),
           scaffoldBackgroundColor: const Color.fromARGB(255, 248, 246, 242),
+          listTileTheme: ListTileThemeData(
+            textColor: const Color.fromARGB(255, 8, 8, 8),
+            tileColor: Colors.green[300],
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+                side: BorderSide(
+                    color: Color.fromARGB(255, 185, 113, 18), width: 3)),
+          ),
           appBarTheme: AppBarTheme(
             centerTitle: true,
             elevation: 0,

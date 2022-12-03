@@ -36,14 +36,7 @@ class _CollectionsState extends State<Collections> {
         itemCount: box.keys.length + 1, // +1 because addtile has to be included
         itemBuilder: (context, index) {
           if (index == 0) {
-            return ListTile(
-              title: IconButton(
-                onPressed: () => _buildCollectionNameDialog(box),
-                icon: const Icon(Icons.add_circle_outline_outlined),
-                iconSize: 40,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            );
+            return _customAddCollectionButton(context, box);
           }
           return TileBuilder.collectionTile(box.getAt(index - 1)!, context);
         },
@@ -86,6 +79,23 @@ class _CollectionsState extends State<Collections> {
                 },
                 child: const Text('Dodaj'))
           ],
+        ),
+      );
+
+  Widget _customAddCollectionButton(
+          BuildContext context, Box<Collection> box) =>
+      Padding(
+        padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  color: Theme.of(context).colorScheme.secondary, width: 2)),
+          title: IconButton(
+            onPressed: () => _buildCollectionNameDialog(box),
+            icon: const Icon(Icons.add_circle_outline_outlined),
+            iconSize: 40,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       );
 }

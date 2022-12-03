@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 import '../model/collection.dart';
 import '../model/hymn.dart';
 
 class TileBuilder {
-  static Widget customRubricTile(String label, BuildContext context) => Padding(
+  static Widget customRubricTile(Pattern label, BuildContext context) =>
+      Padding(
         padding: const EdgeInsets.only(left: 8, bottom: 6),
         child: Column(children: [
           const SizedBox(
@@ -18,36 +20,42 @@ class TileBuilder {
                     BorderSide(color: Theme.of(context).colorScheme.secondary),
               ),
             ),
+            // How to override tile color theme?? might cause problems later
             child: ListTile(
-              leading: Text(
-                label,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 26,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-            ),
+                tileColor: Theme.of(context).scaffoldBackgroundColor,
+                shape: RoundedRectangleBorder(side: BorderSide.none),
+                leading: Text(
+                  // Regexp to string has its pattern on 17th character
+                  label.toString().substring(17, 18),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                )),
           ),
         ]),
       );
 
   static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
         builder: (context, state, child) => Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 8, bottom: 4),
           child: ListTile(
-            shape: const RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black45)),
-            title: Text(hymn.title),
+            title: Text(
+              hymn.title,
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+            ),
             subtitle: hymn.text.length >= 40
-                ? Text(hymn.text
-                    .replaceAll('/', '')
-                    .trim()
-                    .replaceRange(40, null, '..')
-                    .replaceAll('\n', ' ')
-                    .trim()
-                    .replaceAll(RegExp(r'\[[\w+]+\]'),
-                        '')) // Don't ask :P it removes chords from display
+                ? Text(
+                    hymn.text
+                        .replaceAll('/', '')
+                        .trim()
+                        .replaceRange(40, null, '..')
+                        .replaceAll('\n', ' ')
+                        .trim()
+                        // Don't ask :P it removes chords from display
+                        .replaceAll(RegExp(r'\[[\w+]+\]'), ''),
+                  )
                 : Text(hymn.text
                     .replaceAll('/', '')
                     .trim()
@@ -67,9 +75,10 @@ class TileBuilder {
       Padding(
         padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
         child: ListTile(
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(),
-              borderRadius: BorderRadius.all(Radius.elliptical(25, 25))),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: Theme.of(context).colorScheme.secondary, width: 2),
+          ),
           title: Text(collection.name),
           trailing: IconButton(
             iconSize: 35,

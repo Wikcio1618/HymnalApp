@@ -20,36 +20,32 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
 
   final hymnsSorted = Hymn.sortHymnsAlphabetically();
 
-  final List<String> letters = [
-    'A',
-    'B',
-    'C',
-    'Ć',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'Ó',
-    'P',
-    'R',
-    'S',
-    'Ś',
-    'T',
-    'U',
-    'W',
-    'Y',
-    'Z',
-    'Ź',
-    'Ż',
-    '#'
+  final List<Pattern> letters = [
+    // The first letter in regexp will be displayed as a rubric
+    RegExp(r'[A]', caseSensitive: false),
+    RegExp(r'[B]', caseSensitive: false),
+    RegExp(r'[CĆ]', caseSensitive: false),
+    RegExp(r'[D]', caseSensitive: false),
+    RegExp(r'[E]', caseSensitive: false),
+    RegExp(r'[F]', caseSensitive: false),
+    RegExp(r'[G]', caseSensitive: false),
+    RegExp(r'[H]', caseSensitive: false),
+    RegExp(r'[I]', caseSensitive: false),
+    RegExp(r'[J]', caseSensitive: false),
+    RegExp(r'[K]', caseSensitive: false),
+    RegExp(r'[L]', caseSensitive: false),
+    RegExp(r'[M]', caseSensitive: false),
+    RegExp(r'[NŃ]', caseSensitive: false),
+    RegExp(r'[OÓ]', caseSensitive: false),
+    RegExp(r'[P]', caseSensitive: false),
+    RegExp(r'[R]', caseSensitive: false),
+    RegExp(r'[SŚ]', caseSensitive: false),
+    RegExp(r'[T]', caseSensitive: false),
+    RegExp(r'[U]', caseSensitive: false),
+    RegExp(r'[W]', caseSensitive: false),
+    RegExp(r'[Y]', caseSensitive: false),
+    RegExp(r'[ZŹŻ]', caseSensitive: false),
+    RegExp(r'[#]', caseSensitive: false),
   ];
 
   @override
@@ -77,9 +73,13 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
           unSelectTextStyle:
               TextStyle(color: Theme.of(context).colorScheme.secondary),
           startPosition: 0,
-          onValueChanged: (letter) =>
-              _scrollListToLetter(letters.indexOf(letter)),
-          datas: letters,
+          onValueChanged: (letter) => _scrollListToLetter(letters
+              .map((regexp) => regexp.toString().substring(17, 18))
+              .toList()
+              .indexOf(letter)),
+          datas: letters
+              .map((regexp) => regexp.toString().substring(17, 18))
+              .toList(),
         ),
       ),
     ]);
@@ -122,7 +122,7 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
     ];
     if (letters[letter] != '#') {
       for (var hymn in hymnsSorted) {
-        if (hymn.title[0].toLowerCase() == letters[letter].toLowerCase()) {
+        if (hymn.title[0].toUpperCase().startsWith(letters[letter])) {
           column.add(TileBuilder.customLibraryTile(hymn));
         }
       }
@@ -130,7 +130,9 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
       for (var hymn in hymnsSorted) {
         if (hymn.title
             .toLowerCase()
-            .startsWith(RegExp(r'[^\w]ąćóńśźż', caseSensitive: false))) {
+            // \w are all alphanumeric
+            .startsWith(RegExp(r'[^\wąćóńśźż]', caseSensitive: false))) {
+          // Filters thats not alphanumeric
           column.add(TileBuilder.customLibraryTile(hymn));
         }
       }
