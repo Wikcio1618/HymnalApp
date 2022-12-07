@@ -73,7 +73,10 @@ class _CollectionsState extends State<Collections> {
                   box.put(
                     textController.text, // KEY of hive elemnts is their name
                     // TODO - add same-name notification (nothing is added then by framework)
-                    Collection(name: textController.text),
+                    Collection(
+                      name: textController.text,
+                      hymns: [],
+                    ),
                   );
                   textController.clear();
                 },
@@ -91,7 +94,10 @@ class _CollectionsState extends State<Collections> {
               side: BorderSide(
                   color: Theme.of(context).colorScheme.secondary, width: 2)),
           title: IconButton(
-            onPressed: () => _buildCollectionNameDialog(box),
+            onPressed: () {
+              _buildCollectionNameDialog(box);
+              // box.deleteAt(0);
+            },
             icon: const Icon(Icons.add_circle_outline_outlined),
             iconSize: 40,
             color: Theme.of(context).colorScheme.primary,

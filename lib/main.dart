@@ -17,7 +17,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 // When it comes to data maintanance I went for online database beacause it might be more convenient. Voting may be implemented and songs updated in real time. User needs internet connection though
 // *SOLVED with chord package* What I havent figured out is how to store ~akordy~. Using array to get info about position and type of ~akord~ is best i came up with. Then go with latex package. Maybe use HTML?
 
-const collectionsBox = 'collectionsBox';
+const collectionsBox = 'collections_box';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

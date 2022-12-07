@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hymnal_app/collections_collection.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 import '../model/collection.dart';
@@ -89,7 +89,9 @@ class TileBuilder {
             },
           ),
           onTap: () {
-            // TODO - Open collection's list of hymns
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => InspectCollection(nameKey: collection.key),
+            ));
           },
         ),
       );

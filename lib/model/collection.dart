@@ -5,7 +5,7 @@ part 'collection.g.dart';
 
 @HiveType(typeId: 1)
 class Collection extends HiveObject {
-  Collection({this.id, required this.name, this.hymns});
+  Collection({this.id, required this.name, required this.hymns});
 
   @HiveField(0)
   int? id;
@@ -14,5 +14,5 @@ class Collection extends HiveObject {
   String name;
 
   @HiveField(2)
-  List<Hymn>? hymns;
+  List<Hymn> hymns = [];
 }

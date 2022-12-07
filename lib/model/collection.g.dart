@@ -19,7 +19,7 @@ class CollectionAdapter extends TypeAdapter<Collection> {
     return Collection(
       id: fields[0] as int?,
       name: fields[1] as String,
-      hymns: (fields[2] as List?)?.cast<Hymn>(),
+      hymns: (fields[2] as List).cast<Hymn>(),
     );
   }
 
