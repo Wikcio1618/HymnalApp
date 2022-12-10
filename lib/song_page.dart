@@ -11,7 +11,10 @@ var iconChords = Icons.circle_outlined;
 bool showChordVariable = false;
 
 class SongPage extends StatefulWidget {
-  const SongPage({super.key});
+  const SongPage({super.key, required this.multiple, this.hiveKey});
+  final bool multiple;
+  final Hymn? hymn;
+  final String? hiveKey;
 
   @override
   State<SongPage> createState() => _SongPageState();

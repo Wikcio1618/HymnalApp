@@ -41,8 +41,8 @@ class TileBuilder {
               ? Text(hymn.text.trim().replaceRange(40, null, '..'))
               : Text(hymn.text),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SongPage()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SongPage(multiple: true)));
             state.changeState(0);
             state.changeSong(hymn);
             // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
