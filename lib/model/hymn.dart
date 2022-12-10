@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:algolia_helper_flutter/algolia_helper_flutter.dart';
+import 'package:hymnal_app/model/search_metadata.dart';
+import 'package:hymnal_app/root_search.dart';
 import 'enums.dart';
 
 class Hymn {
@@ -46,6 +49,10 @@ class Hymn {
       if (categories != null) "categories": categories,
     };
   }
+
+  /*   static Hymn fromJson(Map<String, dynamic> json) {
+    
+  } */
 
   List<String> getTitles() {
     List<String> titles = [];

@@ -86,7 +86,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return const SearchView();
+                    return const KeyboardSearch();
                   }));
                 },
                 tileColor: const Color.fromARGB(255, 231, 230, 230),
