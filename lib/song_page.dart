@@ -41,7 +41,32 @@ class _SongPageState extends State<SongPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: widget.multiple? _buildNavigationBar2():_buildNavigationNavig
+      body: Consumer<StateAndSongNotifier>(
+        builder: (context, state, child) => Column(children: [
+          Container(),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: LyricsRenderer( 
+                    showChord: showChordVariable,
+                    lyrics:
+                        state.currSong != null ? state.currSong!.text : 'no',
+                    textStyle: TextStyle(
+                        color: Colors.black, fontSize: fontSizeVariable),
+                    chordStyle: TextStyle(
+                        color: Colors.black, fontSize: fontSizeVariable),
+                    onTapChord: (String chord) {}),
+              ),
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+
+  _buildNavigationBar2 ()=>BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color.fromARGB(255, 241, 248, 244),
         selectedItemColor: Colors.green[800],
@@ -106,28 +131,72 @@ class _SongPageState extends State<SongPage> {
               ),
               label: ''),
         ],
-      ),
-      body: Consumer<StateAndSongNotifier>(
-        builder: (context, state, child) => Column(children: [
-          Container(),
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(30),
-                child: LyricsRenderer(
-                    showChord: showChordVariable,
-                    lyrics:
-                        state.currSong != null ? state.currSong!.text : 'no',
-                    textStyle: TextStyle(
-                        color: Colors.black, fontSize: fontSizeVariable),
-                    chordStyle: TextStyle(
-                        color: Colors.black, fontSize: fontSizeVariable),
-                    onTapChord: (String chord) {}),
+      );
+ 
+  _buildNavigationBar1() => BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color.fromARGB(255, 241, 248, 244),
+        selectedItemColor: Colors.green[800],
+        items: [
+          BottomNavigationBarItem(
+              icon: IconButton(
+                  onPressed: () => {
+                        fontSizeVariable += 1,
+                        setState(() {
+                          () => _SongPageState();
+                        })
+                      },
+                  iconSize: 17,
+                  color: Colors.green[800],
+                  icon: const Icon(Mdi.formatFontSizeIncrease)),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                  onPressed: () => {
+                        fontSizeVariable -= 1,
+                        setState(() {
+                          () => _SongPageState();
+                        })
+                      },
+                  iconSize: 17,
+                  color: Colors.green[800],
+                  icon: const Icon(Mdi.formatFontSizeDecrease)),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                icon: const Icon(Icons.arrow_left),
+                onPressed: () {},
+                color: Colors.green[800],
+                iconSize: 17,
               ),
-            ],
-          ),
-        ]),
-      ),
-    );
-  }
+              label: ''),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                icon: const Icon(Icons.arrow_right),
+                onPressed: () {},
+                color: Colors.green[800],
+                iconSize: 17,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                icon: Icon(iconChords),
+                color: Colors.green[800],
+                onPressed: () => {
+                  if (iconChords == Icons.circle_outlined)
+                    [iconChords = Icons.circle_sharp, showChordVariable = true]
+                  else
+                    [
+                      iconChords = Icons.circle_outlined,
+                      showChordVariable = false
+                    ],
+                  setState(() {
+                    () => _SongPageState();
+                  })
+                },
+                iconSize: 17,
+              ),
+              label: ''),
+        ],
+      );
 }
