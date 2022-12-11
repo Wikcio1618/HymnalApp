@@ -6,8 +6,7 @@ import '../model/collection.dart';
 import '../model/hymn.dart';
 
 class TileBuilder {
-  static Widget customRubricTile(Pattern label, BuildContext context) =>
-      Padding(
+  static Widget rubricTile(Pattern label, BuildContext context) => Padding(
         padding: const EdgeInsets.only(left: 8, bottom: 6),
         child: Column(children: [
           const SizedBox(
@@ -37,7 +36,7 @@ class TileBuilder {
         ]),
       );
 
-  static Widget customLibraryTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
+  static Widget customHymnTile(Hymn hymn) => Consumer<StateAndSongNotifier>(
         builder: (context, state, child) => Padding(
           padding: const EdgeInsets.only(left: 8, bottom: 4),
           child: ListTile(
@@ -71,7 +70,8 @@ class TileBuilder {
         ),
       );
 
-  static Widget collectionTile(Collection collection, BuildContext context) =>
+  static Widget customCollectionTile(
+          Collection collection, BuildContext context) =>
       Padding(
         padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
         child: ListTile(

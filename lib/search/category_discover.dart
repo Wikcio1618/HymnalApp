@@ -18,5 +18,5 @@ class DiscoverCategoryPage extends StatelessWidget {
   }
 
   Widget tileBuilder(BuildContext context, int index) =>
-      TileBuilder.customLibraryTile(hymnsOfCategory[index]);
+      TileBuilder.customHymnTile(hymnsOfCategory[index]);
 }

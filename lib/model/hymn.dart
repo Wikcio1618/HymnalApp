@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:algolia_helper_flutter/algolia_helper_flutter.dart';
-import 'package:hymnal_app/model/search_metadata.dart';
-import 'package:hymnal_app/root_search.dart';
 import 'enums.dart';
 
 class Hymn {
@@ -10,13 +7,15 @@ class Hymn {
   int? votes;
   List<Songbooks>? songbooks;
   List<Categories>? categories;
+  List<int>? numbers;
 
   Hymn(
       {required this.title,
       required this.text,
       this.votes,
       this.songbooks,
-      this.categories});
+      this.categories,
+      this.numbers});
 
   static final db = FirebaseFirestore.instance;
   static List<Hymn> hymns = [];
@@ -32,8 +31,8 @@ class Hymn {
       title: data?['title'],
       text: data?['text'],
       votes: data?['votes'],
-      songbooks: List.generate(data?['songbooks'].length,
-          (index) => Songbooks.values[data?['songbooks'][index]]),
+      songbooks: List.generate(
+          data?['songbooks'].length, (index) => Songbooks.values[index]),
       categories: List.generate(
           data?['songbooks'].length, (index) => Categories.values[index]),
     );
@@ -50,9 +49,16 @@ class Hymn {
     };
   }
 
-  /*   static Hymn fromJson(Map<String, dynamic> json) {
-    
-  } */
+  static Hymn fromJson(Map<String, dynamic> json) {
+    return Hymn(
+        title: json['title'],
+        text: json['text'],
+        songbooks: List.generate(
+            json['songbooks'].length, (index) => Songbooks.values[index]),
+        categories: List.generate(
+            json['songbooks'].length, (index) => Categories.values[index]),
+        numbers: List.generate(json['numbers'].length, (index) => index));
+  }
 
   List<String> getTitles() {
     List<String> titles = [];

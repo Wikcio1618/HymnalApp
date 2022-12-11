@@ -14,6 +14,8 @@ class KeyboardSearch extends StatefulWidget {
   State<KeyboardSearch> createState() => _KeyboardSearchState();
 }
 
+// See: https://www.algolia.com/doc/guides/building-search-ui/getting-started/flutter/
+
 class _KeyboardSearchState extends State<KeyboardSearch> {
   final _productsSearcher = HitsSearcher(
       applicationID: 'Y8A7EXYNL3',
@@ -99,35 +101,23 @@ class _KeyboardSearchState extends State<KeyboardSearch> {
   Widget _buildSearchResults() {
     List<Widget> column = [];
     for (Hymn hymn in queryHymns) {
-      column.add(TileBuilder.customLibraryTile(hymn));
+      column.add(TileBuilder.customHymnTile(hymn));
     }
-    return SingleChildScrollView(
-      child: StreamBuilder(
-          stream: _searchMetadata,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) return Text('${snapshot.data!.nbHits}');
-            return const Text('No search results');
-          }),
-    );
+    return StreamBuilder(
+        stream: _searchMetadata,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? _buildSearchResultsListView(snapshot)
+              : _buildNoSearchWidget();
+        });
   }
 
-  void _getFirebaseQuery() async {
-    final ref = FirebaseFirestore.instance
-        .collection("hymns")
-        .withConverter(
-            fromFirestore: Hymn.fromFirestore,
-            toFirestore: (Hymn hymn, _) => hymn.toFirestore())
-        .where('title', arrayContains: textController.text);
+  Widget _buildSearchResultsListView(AsyncSnapshot<SearchMetadata> snapshot) =>
+      Expanded(
+          child: ListView(
+              children: snapshot.data!.hymns
+                  .map((hymn) => TileBuilder.customHymnTile(hymn))
+                  .toList()));
 
-    await ref.get().then((snapshots) {
-      List<Hymn> queried = [];
-      for (var hymn in snapshots.docs) {
-        queried.add(hymn.data());
-      }
-
-      setState(() {
-        queryHymns = queried;
-      });
-    });
-  }
+  _buildNoSearchWidget() => const Center(child: Text('No search yet'));
 }
