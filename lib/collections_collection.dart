@@ -45,6 +45,6 @@ class _InspectCollectionState extends State<InspectCollection> {
   List<Widget>? _buildHymnsColumn() {
     final hymns = box.get(widget.nameKey)?.hymns;
 
-    return hymns?.map((hymn) => TileBuilder.customLibraryTile(hymn)).toList();
+    return hymns?.map((hymn) => TileBuilder.customHymnTile(hymn)).toList();
   }
 }

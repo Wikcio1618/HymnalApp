@@ -1,8 +1,10 @@
+import 'package:algolia_helper_flutter/algolia_helper_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../model/hymn.dart';
+import '../model/search_metadata.dart';
 import '../services/tile_builder.dart';
 
 class KeyboardSearch extends StatefulWidget {
@@ -12,19 +14,31 @@ class KeyboardSearch extends StatefulWidget {
   State<KeyboardSearch> createState() => _KeyboardSearchState();
 }
 
+// See: https://www.algolia.com/doc/guides/building-search-ui/getting-started/flutter/
+
 class _KeyboardSearchState extends State<KeyboardSearch> {
+  final _productsSearcher = HitsSearcher(
+      applicationID: 'Y8A7EXYNL3',
+      apiKey: '03209caa73a08969b5d553197f540681',
+      indexName: 'hymns');
+
+  Stream<SearchMetadata> get _searchMetadata =>
+      _productsSearcher.responses.map(SearchMetadata.fromResponse);
+
   TextEditingController textController = TextEditingController();
   List<Hymn> queryHymns = [];
 
   @override
   void initState() {
     super.initState();
-    textController.addListener(_getFirebaseQuery);
+    textController
+        .addListener(() => _productsSearcher.query(textController.text));
   }
 
   @override
   void dispose() {
     textController.dispose();
+    _productsSearcher.dispose();
     super.dispose();
   }
 
@@ -80,33 +94,26 @@ class _KeyboardSearchState extends State<KeyboardSearch> {
         )
       ]);
 
-  Widget _buildSearchResults() => SingleChildScrollView(
-        child: Column(
-          children: _buildColumnOfResults(),
-        ),
-      );
-
-  List<Widget> _buildColumnOfResults() {
+  Widget _buildSearchResults() {
     List<Widget> column = [];
     for (Hymn hymn in queryHymns) {
-      column.add(TileBuilder.customLibraryTile(hymn));
+      column.add(TileBuilder.customHymnTile(hymn));
     }
-    return column;
+    return StreamBuilder(
+        stream: _searchMetadata,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? _buildSearchResultsListView(snapshot)
+              : _buildNoSearchWidget();
+        });
   }
 
-  void _getFirebaseQuery() async {
-    final ref = FirebaseFirestore.instance
-        .collection("hymns")
-        .where('title', arrayContainsAny: [textController.text]).withConverter(
-            fromFirestore: Hymn.fromFirestore,
-            toFirestore: (Hymn hymn, _) => hymn.toFirestore());
+  Widget _buildSearchResultsListView(AsyncSnapshot<SearchMetadata> snapshot) =>
+      Expanded(
+          child: ListView(
+              children: snapshot.data!.hymns
+                  .map((hymn) => TileBuilder.customHymnTile(hymn))
+                  .toList()));
 
-    await ref.get().then((snapshots) {
-      List<Hymn> queried = [];
-      for (var hymn in snapshots.docs) {
-        queried.add(hymn.data());
-      }
-      queryHymns = queried;
-    });
-  }
+  _buildNoSearchWidget() => const Center(child: Text('No search yet'));
 }

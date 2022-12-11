@@ -7,13 +7,15 @@ class Hymn {
   int? votes;
   List<Songbooks>? songbooks;
   List<Categories>? categories;
+  List<int>? numbers;
 
   Hymn(
       {required this.title,
       required this.text,
       this.votes,
       this.songbooks,
-      this.categories});
+      this.categories,
+      this.numbers});
 
   static final db = FirebaseFirestore.instance;
   static List<Hymn> hymns = [];
@@ -29,8 +31,8 @@ class Hymn {
       title: data?['title'],
       text: data?['text'],
       votes: data?['votes'],
-      songbooks: List.generate(data?['songbooks'].length,
-          (index) => Songbooks.values[data?['songbooks'][index]]),
+      songbooks: List.generate(
+          data?['songbooks'].length, (index) => Songbooks.values[index]),
       categories: List.generate(
           data?['songbooks'].length, (index) => Categories.values[index]),
     );
@@ -45,6 +47,17 @@ class Hymn {
       if (songbooks != null) "songbooks": songbooks,
       if (categories != null) "categories": categories,
     };
+  }
+
+  static Hymn fromJson(Map<String, dynamic> json) {
+    return Hymn(
+        title: json['title'],
+        text: json['text'],
+        songbooks: List.generate(
+            json['songbooks'].length, (index) => Songbooks.values[index]),
+        categories: List.generate(
+            json['songbooks'].length, (index) => Categories.values[index]),
+        numbers: List.generate(json['numbers'].length, (index) => index));
   }
 
   List<String> getTitles() {

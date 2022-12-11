@@ -38,7 +38,8 @@ class _CollectionsState extends State<Collections> {
           if (index == 0) {
             return _customAddCollectionButton(context, box);
           }
-          return TileBuilder.collectionTile(box.getAt(index - 1)!, context);
+          return TileBuilder.customCollectionTile(
+              box.getAt(index - 1)!, context);
         },
       ),
     );

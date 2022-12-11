@@ -117,13 +117,11 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
 // Couldn't implement that well
 
   List<Widget> _buildRubricColumn(int letter) {
-    List<Widget> column = [
-      TileBuilder.customRubricTile(letters[letter], context)
-    ];
+    List<Widget> column = [TileBuilder.rubricTile(letters[letter], context)];
     if (letters[letter] != '#') {
       for (var hymn in hymnsSorted) {
         if (hymn.title[0].toUpperCase().startsWith(letters[letter])) {
-          column.add(TileBuilder.customLibraryTile(hymn));
+          column.add(TileBuilder.customHymnTile(hymn));
         }
       }
     } else {
@@ -133,7 +131,7 @@ class _AlphabeticalListViewState extends State<AlphabeticalListView> {
             // \w are all alphanumeric
             .startsWith(RegExp(r'[^\wąćóńśźż]', caseSensitive: false))) {
           // Filters thats not alphanumeric
-          column.add(TileBuilder.customLibraryTile(hymn));
+          column.add(TileBuilder.customHymnTile(hymn));
         }
       }
     }

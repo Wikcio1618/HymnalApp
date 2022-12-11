@@ -19,5 +19,5 @@ class DiscoverSongbookPage extends StatelessWidget {
   }
 
   Widget tileBuilder(BuildContext context, int index) =>
-      TileBuilder.customLibraryTile(hymnsOfSongbook[index]);
+      TileBuilder.customHymnTile(hymnsOfSongbook[index]);
 }
