@@ -42,8 +42,11 @@ class TileBuilder {
               : Text(hymn.text),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SongPage(multiple: true)));
-            state.changeState(0);
+                builder: (context) => SongPage(
+                      multiple: false,
+                      hymn: hymn,
+                    )));
+            state.changeState(0); // czy to jest potrzebne?
             state.changeSong(hymn);
             // Navigator.of(context).pushNamed('/', arguments: 1); // coming from navigation opt. 1 (will be change when collections are added)
           },
