@@ -4,6 +4,7 @@ import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
 import '../model/collection.dart';
 import '../model/hymn.dart';
+import '../song_page.dart';
 
 class TileBuilder {
   static Widget rubricTile(Pattern label, BuildContext context) => Padding(
@@ -53,18 +54,24 @@ class TileBuilder {
                         .replaceAll('\n', ' ')
                         .trim()
                         // Don't ask :P it removes chords from display
-                        .replaceAll(RegExp(r'\[[\w+]+\]'), ''),
+                        .replaceAll(RegExp(r'\[[\w+ ]+\]'), ''),
                   )
                 : Text(hymn.text
                     .replaceAll('/', '')
                     .trim()
                     .replaceAll('\n', ' ')
                     .trim()
-                    .replaceAll(RegExp(r'\[[\w+]+\]'), '')
+                    .replaceAll(RegExp(r'\[[\w+ ]+\]'), '')
                     .trim()),
             onTap: () {
               state.changeState(0);
               state.changeSong(hymn);
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SongPage(
+                  multiple: false,
+                  hymn: hymn,
+                ),
+              ));
             },
           ),
         ),
@@ -89,9 +96,11 @@ class TileBuilder {
             },
           ),
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => InspectCollection(nameKey: collection.key),
-            ));
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (context) => SongPage(
+            //           multiple: false,
+            //           hymn: hymn,
+            //         )));
           },
         ),
       );

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hymnal_app/model/collection.dart';
+import 'package:hive/hive.dart';
 import 'package:hymnal_app/root.dart';
 import 'package:hymnal_app/services/navigation_song_notifier.dart';
 import 'package:provider/provider.dart';
