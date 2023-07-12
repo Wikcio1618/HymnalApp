@@ -1,16 +1,16 @@
 # hymnal_app
 
-A new Flutter project.
+This app has 2 purposes:
+1. Me learning project developement and new technology namely Flutter
+2. Providing an app with songs that are used in christian communities (not finished)
 
-## Getting Started
+## Implemented
+- GUI is in nice shape but should be finished 
+- Firestore Database is implemented but might be changed to something that allows full text query
+- Algolia search engine implemented but is too expensive and probably will be removed 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Not implemented
+- Splash screen
+- GUI for viewing a specific song
+- switching between songs
+- Database and search engine that are affordable
