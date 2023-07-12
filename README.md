@@ -14,3 +14,5 @@ This app has 2 purposes:
 - GUI for viewing a specific song
 - switching between songs
 - Database and search engine that are affordable
+
+There is a private repository with angular web app where one can add songs to the database
